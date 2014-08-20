@@ -9,7 +9,7 @@
 	
 	<!-- 加载外部properties资源文件，如jdbc.properties，多个可用逗号分隔 -->
 	<context:property-placeholder location="classpath:/jdbc.properties" />
-
+	
 	<!-- 数据源配置，使用c3p0连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
@@ -73,7 +73,7 @@
 	
 	<bean id="springHelper" class="org.jbpm.pvm.internal.processengine.SpringHelper" />
 	<bean id="processEngine" factory-bean="springHelper" factory-method="createProcessEngine"  />
-	
+    
 	<bean id="jBPMUtil" class="com.cn.bccm.common.util.JBPMUtil">
 		<property name="processEngine" ref="processEngine"></property>
 	
