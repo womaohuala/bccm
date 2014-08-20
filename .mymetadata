@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="bccm3"
+  name="bccm"
   id="myeclipse.1406035725819"
   context-root="/bccm"
   j2ee-spec="1.4"
-  archive="bccm3.war">
+  archive="bccm.war">
   <attributes>
     <attribute name="webrootdir" value="/WebRoot" />
   </attributes>
