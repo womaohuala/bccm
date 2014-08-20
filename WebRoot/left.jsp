@@ -25,6 +25,7 @@
     	<ul>
         	<li><a href="department/index.shtml" target="main">部门管理</a></li>
             <li><a href="employee/index.shtml" target="main">员工管理</a></li>
+        	<li><a href="role/index.shtml" target="main">角色管理</a></li>
         </ul>
         <div class="clear"></div>
     </div>

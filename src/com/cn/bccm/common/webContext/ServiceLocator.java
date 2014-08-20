@@ -27,6 +27,9 @@ public class ServiceLocator
     public static <T> T getBean(String name, Class<T> classz) {
         return (T)getApplicationContext().getBean(name, classz);
     }
-    
+
+	public static <T> T getBean(Class<T> typeCls) {
+		return getApplicationContext().getBean(typeCls);
+	}
     
 }

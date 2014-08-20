@@ -2,6 +2,8 @@ package com.cn.bccm.common.constant;
 
 public class Constant {
 	public static final String SESSION_USER = "session_user";
+	public static final String SESSION_PERMISSION = "session_pession";
+	
 	public static final String CONTEXT_PATH="contextPath";
 	public static       String CONTEXT_REALPATH_VALUE="/";
 	

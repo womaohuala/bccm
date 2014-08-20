@@ -71,7 +71,7 @@
    </filter-mapping>
    <filter-mapping>
       <filter-name>encodingFilter</filter-name>
-      <url-pattern>*</url-pattern>
+      <url-pattern>/*</url-pattern>
    </filter-mapping>
     <welcome-file-list>
 	   <welcome-file>/login.html</welcome-file>
@@ -84,4 +84,11 @@
 	    <exception-type>java.lang.Exception</exception-type>
 	    <location>/exception.jsp</location>
 	</error-page>
+	
+	<jsp-config>
+	<taglib> 
+      <taglib-uri>bccmTag</taglib-uri> 
+      <taglib-location>/WEB-INF/bccm.tld</taglib-location> 
+   </taglib>   
+   </jsp-config>
 </web-app>

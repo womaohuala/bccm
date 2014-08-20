@@ -39,6 +39,7 @@ public class MainEmployee implements java.io.Serializable {
 	
 	private Set<Leave> leaves;
 	
+	private Set<MainEmployeeRole> employRoles;
 	
 
 	// Constructors
@@ -164,6 +165,15 @@ public class MainEmployee implements java.io.Serializable {
 
 	public void setLeaves(Set<Leave> leaves) {
 		this.leaves = leaves;
+	}
+
+	public void setEmployRoles(Set<MainEmployeeRole> employRoles) {
+		this.employRoles = employRoles;
+	}
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="employee")
+	public Set<MainEmployeeRole> getEmployRoles() {
+		return employRoles;
 	}
 	
 

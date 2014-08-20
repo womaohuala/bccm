@@ -27,6 +27,7 @@ public class LoginAction{
 	public String loginIn(HttpServletRequest request){
 		String staffName = request.getParameter("staffName");
 		String staffPsw = request.getParameter("staffPsw");
+		System.out.println("ddddd");
 		if(loginService.isLogin(staffName, staffPsw)){
 			//ActionContext.getContext().getSession().put("staffName", staffName);	//保存当前用户
 			request.getSession().setAttribute("staffName", staffName);
