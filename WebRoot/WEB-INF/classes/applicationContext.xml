@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	
+	<!-- 加载外部properties资源文件，如jdbc.properties，多个可用逗号分隔 -->
+	<context:property-placeholder location="classpath:/jdbc.properties" />
+
+	<!-- 数据源配置，使用c3p0连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${database.driver}" />
+		<property name="jdbcUrl" value="${database.url}" />
+		<property name="user" value="${database.user}" />
+		<property name="password" value="${database.password}" />
+
+		<property name="initialPoolSize" value="${cpool.initialPoolSize}" />
+		<property name="minPoolSize" value="${cpool.minPoolSize}" />
+		<property name="maxPoolSize" value="${cpool.maxPoolSize}" />
+		<property name="acquireIncrement" value="${cpool.acquireIncrement}" />
+		<property name="checkoutTimeout" value="${cpool.checkoutTimeout}"/>
+		<property name="maxIdleTime" value="3500"/>
+		<property name="idleConnectionTestPeriod" value="3400"/>
+		<property name="autoCommitOnClose" value="true" />
+		<property name="maxIdleTimeExcessConnections" value="${cpool.maxIdleTimeExcessConnections}" />
+	</bean>
+	
+	<!-- 配置Hibernate的SessionFactory, 使用Annotation配置方式 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="namingStrategy">
+			<bean class="org.hibernate.cfg.ImprovedNamingStrategy" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					${hibernate.dialect}
+				</prop>
+				<prop key="hibernate.show_sql">
+					${hibernate.show_sql}
+				</prop>
+				<prop key="hibernate.format_sql">
+					${hibernate.format_sql}
+				</prop>
+				<prop key="hibernate.jdbc.fetch_size">
+					${hibernate.jdbc.fetch_size}
+				</prop>
+				<prop key="hibernate.jdbc.batch_size">
+					${hibernate.jdbc.batch_size}
+				</prop>
+			</props>
+		</property>
+		<property name="mappingLocations">
+			<list>
+				<!-- 以下几个jbpm.*.hbm.xml由jBPM自带 -->
+				<value>classpath:jbpm.repository.hbm.xml</value>   
+                <value>classpath:jbpm.execution.hbm.xml</value>   
+                <value>classpath:jbpm.history.hbm.xml</value>   
+                <value>classpath:jbpm.task.hbm.xml</value>   
+                <value>classpath:jbpm.identity.hbm.xml</value> 
+			</list>
+		</property>
+		
+		<property name="packagesToScan" value="com.cn.bccm.model" />
+	</bean>
+	
+	<bean id="springHelper" class="org.jbpm.pvm.internal.processengine.SpringHelper" />
+	<bean id="processEngine" factory-bean="springHelper" factory-method="createProcessEngine"  />
+	
+	<bean id="jBPMUtil" class="com.cn.bccm.common.util.JBPMUtil">
+		<property name="processEngine" ref="processEngine"></property>
+	
+	</bean>
+	
+	
+	<!-- 如果没有使用连接池，则用：SimpleNativeJdbcExtractor
+	<bean id="simpleNativeJdbcExtractor" class="org.springframework.jdbc.support.nativejdbc.SimpleNativeJdbcExtractor"/> -->
+	<!-- 使用C3P0连接池，则用：C3P0NativeJdbcExtractor -->
+	<bean id="c3P0NativeJdbcExtractor" class="org.springframework.jdbc.support.nativejdbc.C3P0NativeJdbcExtractor"/>
+	
+	<!-- 配置JdbcTemplate -->
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="nativeJdbcExtractor">
+			<ref bean="c3P0NativeJdbcExtractor" />
+		</property>
+	</bean>
+	<!-- 配置SimpleJdbcTemplate -->
+	<bean id="simpleJdbcTemplate"
+		class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+		<constructor-arg ref="jdbcTemplate"/>
+	</bean>
+	<!-- 配置NamedParameterJdbcTemplate -->
+	<bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="jdbcTemplate" />
+	</bean>
+	<!-- 配置HibernateTemplate -->
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- 配置HibernateTransactionManager事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	
+	
+	
+	<!--
+		让Spring关注Annotation来自动侦测Bean,
+		并检查@Required,@Autowired的属性已被注入，
+		自动扫描所有Dao、Service
+	-->
+	<context:component-scan base-package="com.cn.bccm.dao" />
+	<context:component-scan base-package="com.cn.bccm.service" />
+	<context:component-scan base-package="com.cn.bccm.common.util" />
+	
+	 
+    <!-- 配置基于annotation事物实现的方式，这里制定使用代理类 -->    
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!-- 
+      <tx:annotation-driven transaction-manager="transactionManager"/>
+     -->
+
+	<!-- 事务属性设置 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="load*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="list*" read-only="true" />
+
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="import*" />
+			<tx:method name="*Resend" />
+
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="change*" propagation="REQUIRED" />
+
+			<tx:method name="remove*" propagation="REQUIRED"  />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="set*" />
+			<tx:method name="vote*" />
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	
+	
+</beans>

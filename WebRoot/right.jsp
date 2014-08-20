@@ -1,0 +1,120 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="css/uucall.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body  style="background:#e3e8ee;">
+<div class="ny_right">
+	<div class="ny_right_top">
+    	<div class="ny_right_top1"></div>
+        <div class="ny_right_top2"><div class="ny_right_top21">当前位置：后台系统/客户管理/充值记录</div></div>
+        <div class="ny_right_top3"></div>
+    </div>
+    <div class="clear"></div>
+    
+    <div class="ny_right_con">
+    	<div class="ny_right_con1">
+        	<div class="ul_width1">
+                <ul>
+                    <li class="li_width1"><span class="tdleft">注册时间：</span><input type="text" class="input_css1"/><span class="tdmid">-</span><input type="text" class="input_css1"/></li>
+                    <li><span class="tdleft">UID：</span><input type="text" class="input_css1" /></li>
+                    <li><span class="tdleft">注册帐号：</span><input type="text" class="input_css1" /></li>
+                    <li><span class="tdleft">公司名称：</span><input type="text" class="input_css1" /></li>
+                    <li><span class="tdleft">商务人员：</span><select class="select_css1"><option>请选择</option></select></li>
+                </ul>
+ 				<div class="ny_right_search"><span class="btn_common"><a href="#">查询</a></span></div>
+            </div>
+             <div class="clear"></div>
+        </div>
+        <div class="ny_right_con2">
+        	<table class="table_class">
+            	<tr>
+                	<th>编号</th>
+                    <th>注册时间</th>
+                    <th>UID</th>
+                    <th>注册帐号</th>
+                    <th>公司名称</th>
+                    <th>余额(元)</th>
+                    <th>座席数</th>
+                    <th>用户姓名</th>
+                    <th>联系电话</th>
+                    <th>联系电话</th>
+                    <th>操作</th>
+                </tr>
+                <tr style="background:#fff">
+                	<td>1</td>
+                    <td>2012-09-07 15:33:50</td>
+                    <td>10001</td>
+                    <td>YAN666</td>
+                    <td>杭州名财信息咨询有限公司</td>
+                    <td>7000</td>
+                    <td>10</td>
+                    <td>徐勋</td>
+                    <td>13083988333</td>
+                    <td>周铮</td>
+                    <td><a href="#">详情</a></td>
+                </tr>
+                <tr style="background:#f3f3f3">
+                	<td>2</td>
+                    <td>2012-09-07 15:33:50</td>
+                    <td>10002</td>
+                    <td>YAN666</td>
+                    <td>杭州名财信息咨询有限公司</td>
+                    <td>7000</td>
+                    <td>10</td>
+                    <td>周晓春</td>
+                    <td>15064814144</td>
+                    <td>周铮</td>
+                    <td><a href="#">详情</a></td>
+                </tr>
+                <tr style="background:#fff">
+                	<td>3</td>
+                    <td>2012-09-07 15:33:50</td>
+                    <td>10003</td>
+                    <td>YAN666</td>
+                    <td>杭州名财信息咨询有限公司</td>
+                    <td>7000</td>
+                    <td>10</td>
+                    <td>徐勋</td>
+                    <td>13083988333</td>
+                    <td>周铮</td>
+                    <td><a href="#">详情</a></td>
+                </tr>
+                <tr style="background:#f3f3f3">
+                	<td>4</td>
+                    <td>2012-09-07 15:33:50</td>
+                    <td>10004</td>
+                    <td>YAN666</td>
+                    <td>杭州名财信息咨询有限公司</td>
+                    <td>7000</td>
+                    <td>10</td>
+                    <td>周晓春</td>
+                    <td>15064814144</td>
+                    <td>周铮</td>
+                    <td><a href="#">详情</a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="ny_right_con3">
+        	<ul>
+            	<li><div class="btn_page1"><a href="">首&nbsp;页</a></div></li>
+                <li><div class="btn_page1"><a href="">上&nbsp;页</a></div></li>
+                <li><div class="btn_page1"><a href="">下&nbsp;页</a></div></li>
+                <li><div class="btn_page1"><a href="">尾&nbsp;页</a></div></li>
+                <li><div class="btn_page2">第1/3页</div></li>
+                <li><div class="btn_page2">到<select class="select_css2"><option>1</option><option>2</option><option>3</option></select>页</div></li>
+            </ul>
+        </div>
+        <div class="ny_right_bottom">
+        	<div class="ny_right_bottom1"></div>
+            <div class="ny_right_bottom2"></div>
+            <div class="ny_right_bottom3"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

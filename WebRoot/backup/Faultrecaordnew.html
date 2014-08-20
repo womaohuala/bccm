@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="css/uucall.css" rel="stylesheet" type="text/css" />
+<link href="css/jquery.bigautocomplete.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.bigautocomplete.js"></script>
+<script type="text/javascript">
+	  $(function(){
+		  
+		  $("#tt").bigAutocomplete({width:102,data:[{title:"中国好声音",result:{ff:"qq"}},{title:"中国移动网上营业厅"},{title:"中国银行"},{title:"中国移动"},{title:"中国好声音第三期"},{title:"中国好声音 第一期"},{title:"中国电信网上营业厅"},{title:"中国工商银行"},{title:"中国好声音第二期"},{title:"中国地图"}],callback:function(data){
+			  alert(data.title);
+			  
+		  }});
+		  
+	  
+	  })
+</script>
+</head>
+
+<body  style="background:#e3e8ee;">
+<div class="ny_right">
+	<div class="ny_right_top">
+    	<div class="ny_right_top1"></div>
+        <div class="ny_right_top2"><div class="ny_right_top21">当前位置：后台系统/客户管理/故障记录</div>
+        <div class="ny_right_top3"></div>
+    </div>
+    <div class="clear"></div>
+    <div class="ny_right_con">
+    	<div class="ny_right_con1">
+        	<table class="table_class3">
+            	<tr>
+                	<td class="tdleft3">故障客户：</td>
+                    <td class="tdright3">
+                    	<input type="radio" name="fault" value="1" checked="checked" class="radio_class1"/>所有  
+                        <input type="radio" name="fault" value="2" class="radio_class1"/>部分 
+                        <input type="radio" name="fault" value="3" class="radio_class1"/>注册帐号<input type="text" class="input_css6" type="text" id="tt" value="输入帐号查询" onmouseover=this.focus();this.select(); onclick="if(value==defaultValue){value='';this.style.color='#000'}" onBlur="if(!value){value=defaultValue;this.style.color='#999'}" style="color:#999"/></td>
+                </tr>
+                <tr>
+                	<td class="tdleft3">故障发生时间：</td>
+                    <td class="tdright3"><input type="text" class="input_css5"/></td>
+                </tr>
+                <tr>
+                	<td class="tdleft3">故障描述：</td>
+                    <td class="tdright3"><textarea class="textarea_class1"></textarea></td>
+                </tr>
+                <tr>
+                	<td class="tdleft3">故障产生原因：</td>
+                    <td class="tdright3"><textarea class="textarea_class1"></textarea></td>
+                </tr>
+                <tr>
+                	<td class="tdleft3">解决方式：</td>
+                    <td class="tdright3"><textarea class="textarea_class1"></textarea></td>
+                </tr>
+                <tr>
+                	<td class="tdleft3">是否解决：</td>
+                    <td class="tdright3"><select class="select_css3"><option>未解决</option><option>已解决</option><option>搁置</option></select></td>
+                </tr>
+                <tr>
+                	<td class="tdleft3">解决时间：</td>
+                    <td class="tdright3"><input class="input_css5" /></td></tr>
+                <tr>
+                	<td class="tdleft3">处理人：</td>
+                    <td class="tdright3"><input type="text" class="input_css5" /></td>
+                </tr>
+                <tr>
+                	<td colspan="2"><div class="btn_common"><a href="">提交</a></div></td>
+                </tr>
+            </table>
+        </div>
+        <div class="ny_right_bottom">
+        	<div class="ny_right_bottom1"></div>
+            <div class="ny_right_bottom2"></div>
+            <div class="ny_right_bottom3"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

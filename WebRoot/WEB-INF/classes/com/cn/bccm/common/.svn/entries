@@ -1,0 +1,40 @@
+10
+
+dir
+54
+svn://127.0.0.1/bccm/src/com/cn/bccm/common
+svn://127.0.0.1
+
+
+
+2014-07-26T14:19:05.292968Z
+47
+ye
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+947dfac9-5298-ac47-ad95-19f1cc35681c
+
+webContext
+dir
+
+constant
+dir
+
+util
+dir
+
+interceptor
+dir
+
