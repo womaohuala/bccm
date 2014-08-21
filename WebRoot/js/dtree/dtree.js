@@ -32,7 +32,7 @@ var pos=strFullPath.indexOf(strPath);
 var prePath=strFullPath.substring(0,pos); 
 var postPath=strPath.substring(0,strPath.substr(1).indexOf('/')+1);
 var rootPath=prePath + postPath;
-function Node(id, pid, name,disable,checked, url, title, target, icon, iconOpen, open,newValue,lastValue) {
+function Node(id, pid, name,disable,checked, url, title, target, icon, iconOpen, open,newValue,lastValue,nodeid) {
 	this.id = id;
 
 	this.pid = pid;
@@ -68,6 +68,8 @@ function Node(id, pid, name,disable,checked, url, title, target, icon, iconOpen,
 	this.disable=disable;
 	
 	this.checked=checked;
+	
+	this.nodeid=nodeid;
 	
 };
 
@@ -155,7 +157,7 @@ function dTree(objName) {
 
 dTree.prototype.add = function(id, pid, name,disable,checked, url, title, target, icon, iconOpen, open,newValue,lastValue) {
 
-	this.aNodes[this.aNodes.length] = new Node(id, pid, name,disable,checked, url, title, target, icon, iconOpen, open,newValue,lastValue);
+	this.aNodes[this.aNodes.length] = new Node(id, pid, name,disable,checked, url, title, target, icon, iconOpen, open,newValue,lastValue,this.aNodes.length);
 
 };
 
@@ -288,8 +290,8 @@ dTree.prototype.node = function(node, nodeId) {
 		//��Ӹ�ѡ���ڵ���ҳ��ѵ�һ��ڵ�id����Ϊ0���ýڵ㲻��Ӹ�ѡ�򡣴˴��ķ���selectCheckbox�ڱ�JS�ڲ�ʵ��
 	    if(this.config.useCheckbox == true ){
 	    	str+= '<input type="checkbox"  name="'+
-	    	this.obj+'_id"  id="c'+  this.obj + nodeId + 
-	    	'" onclick="javascript:'+this.obj+'.selectCheckbox('+nodeId+')" value="'+node.id+'"';
+	    	this.obj+'_id"  id="c'+  this.obj + node.id + 
+	    	'" onclick="javascript:'+this.obj+'.selectCheckbox('+node.id+')" value="'+node.id+'"';
 	    	if(node.checked){
 	    		str+='checked=true';
 	    	}
@@ -297,7 +299,7 @@ dTree.prototype.node = function(node, nodeId) {
 	    		str+=' disabled';
 	    	}
 	    	str+='/>';
-	    	str+= '<input type="hidden"  name="'+this.obj+'_name"  id="c'+  this.obj + nodeId + '"  value="'+node.name+'"/>';
+	    	str+= '<input type="hidden"  name="'+this.obj+'_name"  id="c'+  this.obj + node.id + '"  value="'+node.name+'"/>';
 	    	str+= '<input type="hidden"  name="'+this.obj+'_new"   value="'+node.newValue+'"/>';
   		}
 		if(node.lastValue){
@@ -815,14 +817,20 @@ dTree.prototype.selectCheckbox=function(nodeId){
 	    	}
 	  }
 	  
-	  var node = this.aNodes[nodeId];
 	  var len =this.aNodes.length;
 	  for (var n=0; n<len; n++) {
-	   if ((n != nodeId) && (this.aNodes[n].pid == node.id)) {
-		    document.getElementById("c"+this.obj+n).checked=cs;
-		    this.selectCheckbox(n); 
+	   if ((this.aNodes[n].pid == nodeId)) {
+		    document.getElementById("c"+this.obj+this.aNodes[n].id).checked=cs;
+		    this.selectCheckbox(this.aNodes[n].id); 
 	    }
 	  }
+	  
+	  var node;
+	  for (var m=0; m<len; m++) {
+		   if ((this.aNodes[m].id == nodeId)) {
+			    node=this.aNodes[m];
+		    }
+		  }
 	  
 	  //判断子节点是否都有选中，控制父节点是否选中
 	  if(node.pid!=-1){
@@ -850,13 +858,12 @@ dTree.prototype.selectCheckbox=function(nodeId){
 
 //判断子节点是否都选中
 dTree.prototype.checkParentNodeCheck=function(nodeId){
-		 var node = this.aNodes[nodeId];
 		  var len =this.aNodes.length;
 		  for (var n=0; n<len; n++) {
-		   if ((n != nodeId) && (this.aNodes[n].pid == node.id)) {
-			   isClear=document.getElementById("c"+this.obj+n).checked;
+		   if ( (this.aNodes[n].pid == nodeId)) {
+			   isClear=document.getElementById("c"+this.obj+this.aNodes[n].id).checked;
 			    if(isClear)return true;
-			    this.checkParentNodeCheck(n); 
+			    this.checkParentNodeCheck(this.aNodes[n].id); 
 		    }
 		  }
 	}
