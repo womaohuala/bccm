@@ -19,12 +19,12 @@ function searchKey(){
 
 function add(){
 	var src="add.shtml";
-	newIframe(src);
+	newIframe(src,"添加角色");
 }
 
 function edit(id){
 	var src="edit.shtml?id="+id;
-	newIframe(src);
+	newIframe(src,"修改角色");
 }
 
 function delById(id){
@@ -34,7 +34,7 @@ function delById(id){
 
 function detail(id){
 	var src="detail.shtml?id="+id;
-	newIframe(src);
+	newIframe(src,"角色详细");
 }
 
 </script>

@@ -16,6 +16,16 @@
 <script type="text/javascript" src="../js/base.js"></script>
 </head>
 <script type="text/javascript">
+
+
+	$(document).ready(function() { 
+	    $('#form1').ajaxForm({ 
+	        dataType:  'json', 
+	        success: processJson,
+	        error: processError
+	    }); 
+	 });
+	 
 	function save(){
 		if(validForm()){
 			idSt=idSt.replace(",0,",",")

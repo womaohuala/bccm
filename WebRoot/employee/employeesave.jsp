@@ -40,6 +40,14 @@
        }
      }
      
+
+    $(document).ready(function() { 
+        $('#form1').ajaxForm({ 
+            dataType:  'json', 
+            success: processJson,
+            error: processError
+        }); 
+     });
      
     function save(){
 		if(validForm()){
