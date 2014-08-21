@@ -132,6 +132,8 @@ public class MainEmployeeController {
 		request.setAttribute("employee", employee);
 		List<MainDepartment> deptList = departmentService.list(new Object[]{});
 		request.setAttribute("deptList", deptList);
+		List<MainRole> roleList = roleService.list(new Object[]{});
+		request.setAttribute("roleList", roleList);
 		return "employee/employeedetail";
 	}
 	
