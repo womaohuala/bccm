@@ -13,14 +13,6 @@ function newIframe(src,title){
   });
  }
 
-$(document).ready(function() { 
-    $('#form1').ajaxForm({ 
-        dataType:  'json', 
-        success: processJson,
-        error: processError
-    }); 
- });
- 
  /*
  function  processJson(data){
 	 parent.layer.msg(data.resultInfo);
