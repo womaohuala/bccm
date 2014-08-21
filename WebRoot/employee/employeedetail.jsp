@@ -11,6 +11,9 @@
 <script src="../js/jquery-1.11.1.min.js"  type="text/javascript"></script>
 <script src="../js/jquery.form.js"  type="text/javascript"></script>
 <script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" ></script>
+<link rel="StyleSheet" href="../js/dtree/dtree.css" type="text/css" />
+<script type="text/javascript" src="../js/dtree/dtree.js"></script>
+<script type="text/javascript" src="../js/base.js"></script>
 <script type="text/javascript">
 
     function getProject(value){
@@ -137,6 +140,36 @@
                     <td class="tdright2"><input type="text"  class="input_css3" id="empPassword" name="empPassword" value=${employee.empPassword} /></td>
                 </tr>
                 
+                  <tr>
+                	<td class="tdleft2">用户角色：</td>
+                	<td class="tdright2">
+                	 <script type="text/javascript">
+							var ishead=false;
+							mytree = new dTree('mytree');
+							mytree.config.useCookies=false;
+							mytree.config.useCheckbox = true;  //设置复选
+							mytree.add(0,-1,'角色列表',true);
+							//已有角色权限选中
+							idSt=",";
+							<c:forEach var="obj" items="${employee.employRoles}"> 
+								idSt+="${obj.role.roleId}"+",";
+							</c:forEach> 
+
+							<c:forEach var="obj" items="${roleList}"> 
+								var flag=false;
+								if(idSt.indexOf(","+"${obj.roleId}"+",")>-1){
+									flag=true;
+									ishead=true;
+								}
+								mytree.add("${obj.roleId}","0","${obj.roleName}",true,flag);
+							</c:forEach> 
+							document.write(mytree);
+							mytree.openAll();
+							if(ishead)mytree.selectCheckboxMe(0);
+							
+					</script>
+                	 </td>
+                </tr>
             </table>
             </form>
         </div>

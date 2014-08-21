@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="bccm"  uri="bccmTag" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -77,7 +78,9 @@ function addCompany(){
                     <li><span class="tdleft">公司名称：</span><input type="text" class="input_css1" name="compName" id="compName"/></li>
                 </ul>
  				<div class="ny_right_search"><span class="btn_common"><a href="#" onclick="searchCompany()">查询</a></span></div>
+ 				<bccm:permission permissionId="2">
  				<div class="ny_right_search"><span class="btn_common"><a href="#" onclick="addCompany()">增加</a></span></div>
+ 				</bccm:permission>
             </form>
             </div>
              <div class="clear"></div>
@@ -93,26 +96,22 @@ function addCompany(){
                     <th>操作</th>
                 </tr>
                 <c:forEach var="company" items="${objPage.pageData}" begin="0" varStatus="obj">
-                 <c:if test="${obj.count%2 == '0'}">
- 			     <tr style="background:#f3f3f3">
+ 			    <tr ${obj.count%2 == '0'?'style="background:#f3f3f3"':'style="background:#fff"'} >
  			        <td>${objPage.pageSize*(objPage.pageNo-1)+obj.index+1}</td>
  			        <td>${company.compName}</td>
                     <td>${company.compIntro}</td>
                     <td>${company.compHead}</td>
                     <td>${company.compPhone}</td>
-                    <td><a href="#" onclick="editCompany(${company.compId})">修改</a>&nbsp;<a href="delete.shtml?id=${company.compId}">删除</a>&nbsp;<a href="#" onclick="detailCompany(${company.compId})">详情</a></td>
+                    <td><bccm:permission permissionId="7">
+                    <a href="#" onclick="editCompany(${company.compId})">修改</a>
+                    </bccm:permission>
+                    <bccm:permission permissionId="5">
+                    &nbsp;<a href="delete.shtml?id=${company.compId}">删除</a>
+                    </bccm:permission>
+                    <bccm:permission permissionId="6">
+                    &nbsp;<a href="#" onclick="detailCompany(${company.compId})">详情</a></td>
+                    </bccm:permission>
 	              </tr>
-  				  </c:if>
-  				 <c:if test="${obj.count%2 != '0'}">
-                 <tr style="background:#fff">
-                 	<td>${objPage.pageSize*(objPage.pageNo-1)+obj.index+1}</td>
-                	<td>${company.compName}</td>
-                    <td>${company.compIntro}</td>
-                    <td>${company.compHead}</td>
-                    <td>${company.compPhone}</td>
-                    <td><a href="#" onclick="editCompany(${company.compId})">修改</a>&nbsp;<a href="delete.shtml?id=${company.compId}">删除</a>&nbsp;<a href="#" onclick="detailCompany(${company.compId})">详情</a></td>
-                  </tr>
-                 </c:if>
 		        </c:forEach>
                 
             </table>

@@ -11,6 +11,8 @@
 <script src="../js/jquery-1.11.1.min.js"  type="text/javascript"></script>
 <script src="../js/jquery.form.js"  type="text/javascript"></script>
 <script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" ></script>
+<link rel="StyleSheet" href="../js/dtree/dtree.css" type="text/css" />
+<script type="text/javascript" src="../js/dtree/dtree.js"></script>
 <script type="text/javascript">
 
     function getProject(value){
@@ -146,6 +148,48 @@
                 	<td class="tdright2"><input type="text"  class="input_css3" id="empUserName" name="empUserName" /></td>
                     <td class="tdleft2">登陆密码：</td>
                     <td class="tdright2"><input type="text"  class="input_css3" id="empPassword" name="empPassword" /></td>
+                </tr>
+                
+                 <tr>
+                	<td class="tdleft2">角色选择：</td>
+                	
+                	<td class="tdright2">
+                	  <%--<select class="select_css4" id="roleId" name="roleId" >
+	                	  <option value="">请选择</option>
+	                	  <c:forEach var="role" items="${roleList}">
+	                	    <option value="${role.roleId}">${role.roleName}</option>
+	                	  </c:forEach>
+                	  </select>
+                	 --%>
+                	 <!-- 角色树 -->
+					<script type="text/javascript">
+							mytree = new dTree('mytree');
+							mytree.config.useCookies=false;
+							mytree.config.useCheckbox = true;  //设置复选
+							mytree.add(0,-1,'角色列表',false);
+							
+							<c:forEach var="obj" items="${roleList}"> 
+								mytree.add("${obj.roleId}","0","${obj.roleName}",false);
+							</c:forEach> 
+							document.write(mytree);
+							mytree.openAll();
+							
+							//已有角色权限选中
+							idSt=",";
+							<c:forEach var="obj" items="${employee.employRoles}"> 
+								idSt+="${obj.roleId}"+",";
+							</c:forEach> 
+							var roles=idSt.split(",");
+							for(var i=0;i<roles.length;i++){
+								if(roles[i]!=""&&roles[i]!=null){
+									mytree.selectCheckboxMe(roles[i]);
+									mytree.selectCheckboxMe(0);
+								}
+							}
+										
+					</script>
+                	 </td>
+                	 
                 </tr>
                 
                 <tr><td colspan="4"><div class="btn_common"><a href="#" onclick="$('#form1').submit();return false;">提交</a></div></td></tr>

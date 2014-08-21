@@ -126,6 +126,11 @@
                     <td class="tdleft2">部门电话：</td>
                     <td class="tdright2"><input type="text" class="input_css3" name="deptPhone" id="deptPhone" /></td>
                 </tr>
+                <tr>
+                	<td class="tdleft2">上级部门：</td>
+                	<td class="tdright2">经理办</td>
+                	<input type="hidden"  name="deptParent" id="deptParent" value="2" />
+                </tr>
                
                 <tr><td colspan="4"><div class="btn_common"><a href="#" onclick="$('#form1').submit();return false;">提交</a></div></td></tr>
             </table>

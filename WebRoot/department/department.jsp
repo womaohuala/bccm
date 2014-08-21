@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="bccm"  uri="bccmTag" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -10,6 +11,7 @@
 <link href="../css/uucall.css" rel="stylesheet" type="text/css" />
 <script src="../js/jquery-1.11.1.min.js"  type="text/javascript"></script>
 <script src="../js/layer/layer.min.js" type="text/javascript" ></script>
+<script type="text/javascript" src="../js/base.js"></script>
 <script type="text/javascript">
 function addDepartment(){
   $.layer({
@@ -57,6 +59,11 @@ function addDepartment(){
 		
 	 }
 
+ function delById(id){
+		var src="delete.shtml?id="+id;
+		del(src);
+	}
+
 </script>
 </head>
 
@@ -77,7 +84,9 @@ function addDepartment(){
                     <li><span class="tdleft">部门名称：</span><input type="text" class="input_css1" name="deptName" id="deptName" value="${deptName}" /></li>
                 </ul>
  				<div class="ny_right_search"><span class="btn_common"><a href="#" onclick="searchDepartment()">查询</a></span></div>
+ 				<bccm:permission permissionId="33">
  				<div class="ny_right_search"><span class="btn_common"><a href="#" onclick="addDepartment()">增加</a></span></div>
+ 				</bccm:permission>
             </form>
             </div>
              <div class="clear"></div>
@@ -87,32 +96,31 @@ function addDepartment(){
             	<tr>
             		<td>序号</td>
                 	<th>部门名称</th>
+                	<th>上级部门</th>
                     <th>部门负责人</th>
                     <th>部门电话</th>
                     <th>部门信息</th>
                     <th>操作</th>
                 </tr>
                 <c:forEach var="department" items="${objPage.pageData}" begin="0" varStatus="obj">
-                 <c:if test="${obj.count%2 == '0'}">
- 			     <tr style="background:#f3f3f3">
+ 			     <tr ${obj.count%2 == '0'?'style="background:#f3f3f3"':'style="background:#fff"'} >
  			        <td>${objPage.pageSize*(objPage.pageNo-1)+obj.index+1}</td>
  			        <td>${department.deptName}</td>
+ 			        <td>${department.deptId==department.deptParent.deptId?'':department.deptParent.deptName}</td>
                     <td>${department.deptInfo}</td>
                     <td>${department.deptHead}</td>
                     <td>${department.deptPhone}</td>
-                    <td><a href="#" onclick="editDepartment(${department.deptId})">修改</a>&nbsp;<a href="delete.shtml?id=${department.deptId}">删除</a>&nbsp;<a href="#" onclick="detailDepartment(${department.deptId})">详情</a></td>
+                    <td>
+                    <bccm:permission permissionId="38">
+                    <a href="#" onclick="editDepartment(${department.deptId})">修改</a>
+                    </bccm:permission>&nbsp;
+                    <bccm:permission permissionId="36">
+                    <a href="#" onclick="delById(${department.deptId})">删除</a>&nbsp;
+                    </bccm:permission><bccm:permission permissionId="37">
+                    <a href="#" onclick="detailDepartment(${department.deptId})">详情</a>
+                    </bccm:permission>
+                    </td>
 	              </tr>
-  				  </c:if>
-  				 <c:if test="${obj.count%2 != '0'}">
-                 <tr style="background:#fff">
-                 	<td>${objPage.pageSize*(objPage.pageNo-1)+obj.index+1}</td>
-                	 <td>${department.deptName}</td>
-                    <td>${department.deptInfo}</td>
-                    <td>${department.deptHead}</td>
-                    <td>${department.deptPhone}</td>
-                    <td><a href="#" onclick="editDepartment(${department.deptId})">修改</a>&nbsp;<a href="delete.shtml?id=${department.deptId}">删除</a>&nbsp;<a href="#" onclick="detailDepartment(${department.deptId})">详情</a></td>
-                  </tr>
-                 </c:if>
 		        </c:forEach>
                 
             </table>

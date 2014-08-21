@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="bccm"  uri="bccmTag" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -58,7 +59,6 @@ function addEmployee(){
 	  });
 	}
 
-
  
 
 </script>
@@ -87,7 +87,10 @@ function addEmployee(){
                     <li><span class="tdleft">职员姓名：</span><input type="text" class="input_css1" value="${empName}" name="empName" id="empName"   /></li>
                 </ul>
  				<div class="ny_right_search"><span class="btn_common"><a href="#" onclick="searchEmployee()">查询</a></span></div>
+ 				 <bccm:permission permissionId="41">
  				<div class="ny_right_search"><span class="btn_common"><a href="#" onclick="addEmployee()">增加</a></span></div>
+ 				 </bccm:permission>
+ 				 
             </form>
             </div>
              <div class="clear"></div>
@@ -105,48 +108,27 @@ function addEmployee(){
                     <th>操作</th>
                 </tr>
                 <c:forEach var="employee" items="${objPage.pageData}" begin="0" varStatus="obj">
-                 <c:if test="${obj.count%2 == '0'}">
- 			     <tr style="background:#f3f3f3">
+                <tr ${obj.count%2 == '0'?'style="background:#f3f3f3"':'style="background:#fff"'} >
  			        <td>${objPage.pageSize*(objPage.pageNo-1)+obj.index+1}</td>
  			        <td>${employee.empName}</td>
                     <td>
-                    	<c:choose>
-                    		<c:when test="${employee.empSex==0}">
-                    		男性
-                    		</c:when>
-                    		<c:otherwise>
-                    		女性
-                    		</c:otherwise>
-                    	</c:choose>
+                    ${employee.empSex==1?'男性':'女性'}
                     </td>
                     <td>${employee.empPhone}</td>
                     <td>${employee.department.deptName}</td>
                     <td>${employee.empUserName}</td>
                     <td>${employee.empPassword}</td>
-                    <td><a href="#" onclick="editEmployee(${employee.empId})">修改</a>&nbsp;<a href="delete.shtml?id=${employee.empId}">删除</a>&nbsp;<a href="#" onclick="detailEmployee(${employee.empId})">详情</a></td>
-	              </tr>
-  				  </c:if>
-  				 <c:if test="${obj.count%2 != '0'}">
-                 <tr style="background:#fff">
-                 	<td>${objPage.pageSize*(objPage.pageNo-1)+obj.index+1}</td>
- 			        <td>${employee.empName}</td>
                     <td>
-                    	<c:choose>
-                    		<c:when test="${employee.empSex==0}">
-                    		男性
-                    		</c:when>
-                    		<c:otherwise>
-                    		女性
-                    		</c:otherwise>
-                    	</c:choose>
-                    </td>
-                    <td>${employee.empPhone}</td>
-                    <td>${employee.department.deptName}</td>
-                    <td>${employee.empUserName}</td>
-                    <td>${employee.empPassword}</td>
-                    <td><a href="#" onclick="editEmployee(${employee.empId})">修改</a>&nbsp;<a href="delete.shtml?id=${employee.empId}">删除</a>&nbsp;<a href="#" onclick="detailEmployee(${employee.empId})">详情</a></td>
-                  </tr>
-                 </c:if>
+                    <bccm:permission permissionId="46">
+                    <a href="#" onclick="editEmployee(${employee.empId})">修改</a>
+                    </bccm:permission>
+                    <bccm:permission permissionId="44">
+                    &nbsp;<a href="delete.shtml?id=${employee.empId}">删除</a>
+                    </bccm:permission>
+                    <bccm:permission permissionId="45">
+                    &nbsp;<a href="#" onclick="detailEmployee(${employee.empId})">详情</a></td>
+                    </bccm:permission>
+	              </tr>
 		        </c:forEach>
                 
             </table>

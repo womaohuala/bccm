@@ -111,7 +111,11 @@
                     <td class="tdleft2">部门电话：</td>
                     <td class="tdright2"><input type="text" readonly="readonly" class="input_css3" name="deptPhone" id="deptPhone" value=${department.deptPhone} /></td>
                 </tr>
-                
+                 <tr>
+                	<td class="tdleft2">上级部门：</td>
+                	
+                	<td class="tdright2">${department.deptId==department.deptParent.deptId?'':'经理办'}</td>
+                </tr>
             </table>
             </form>
         </div>
