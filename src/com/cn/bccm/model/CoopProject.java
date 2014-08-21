@@ -35,6 +35,7 @@ public class CoopProject implements java.io.Serializable {
 	private String proHead;
 	private String proPhone;
 	private String remark;
+	private String proEmp;
 	private Date beginTime;
 	private Date endTime;
 	private CoopCompany company;
@@ -166,8 +167,13 @@ public class CoopProject implements java.io.Serializable {
 	public void setPlans(Set<MainPlan> plans) {
 		this.plans = plans;
 	}
-	
-	
 
-	
+	public void setProEmp(String proEmp) {
+		this.proEmp = proEmp;
+	}
+
+	@Column(name = "pro_emp", nullable = false, length = 20)
+	public String getProEmp() {
+		return proEmp;
+	}
 }

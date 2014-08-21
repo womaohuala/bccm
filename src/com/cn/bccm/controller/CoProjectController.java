@@ -28,10 +28,13 @@ import com.cn.bccm.dao.ICoCompanyDao;
 import com.cn.bccm.dao.base.Page;
 import com.cn.bccm.model.CoopCompany;
 import com.cn.bccm.model.CoopProject;
+import com.cn.bccm.model.MainDepartment;
 import com.cn.bccm.model.MainEmployee;
 import com.cn.bccm.model.MainPlan;
 import com.cn.bccm.service.ICoCompanyService;
 import com.cn.bccm.service.ICoProjectService;
+import com.cn.bccm.service.IMainDepartmentService;
+import com.cn.bccm.service.IMainEmployeeService;
 import com.cn.bccm.util.ConstantValues;
 
 
@@ -46,6 +49,12 @@ public class CoProjectController {
 	
 	@Autowired
 	private ICoCompanyService compnayService;
+	
+	@Autowired
+	private IMainEmployeeService employeeService;
+	
+	@Autowired
+	private IMainDepartmentService departmentService;
 
 	
 	@RequestMapping("index")
@@ -103,6 +112,10 @@ public class CoProjectController {
 		request.setAttribute("project", project);
 		List<CoopCompany> comList = compnayService.list(new Object[]{});
 		request.setAttribute("comList", comList);
+		List<MainEmployee> employeeList=employeeService.list(new Object[]{});
+		request.setAttribute("employeeList", employeeList);
+		List<MainDepartment> deptList=departmentService.list(new Object[]{});
+		request.setAttribute("deptList", deptList);
 		return "project/projectedit";
 	}
 	

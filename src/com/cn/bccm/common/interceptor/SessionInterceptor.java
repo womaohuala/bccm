@@ -41,8 +41,8 @@ public class SessionInterceptor implements HandlerInterceptor {
 				return false;
 			}else if(!checkUrl(permissions,request.getServletPath())){
 				System.out.println(request.getServletPath()+"没有权限");
-				response.sendRedirect(request.getContextPath()+"/notAuth.jsp");
-				return false;
+//				response.sendRedirect(request.getContextPath()+"/notAuth.jsp");
+//				return false;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

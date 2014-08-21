@@ -189,6 +189,11 @@ public class MainEmployee implements java.io.Serializable {
 		}
 		return 0;
 	}
+	
+	@Transient
+	public String getDeptTree(){
+		return "d"+this.department.getDeptId();
+	}
 
 	
 }

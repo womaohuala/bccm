@@ -41,7 +41,7 @@ public class MainEmployeeService implements IMainEmployeeService  {
 	public List<MainEmployee> list(Object[] params) {
 		return employeeDao.list("from MainEmployee", params);
 	}
-
+	
 	public List<MainEmployee> listByPage(String hql, int pageNo, int pageSize,
 			Map<String, Object> params) {
 		return employeeDao.listByPage(hql, pageNo, pageSize, params);
