@@ -3,6 +3,7 @@ package com.cn.bccm.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * MainEmployee entity. @author MyEclipse Persistence Tools
@@ -176,6 +178,17 @@ public class MainEmployee implements java.io.Serializable {
 		return employRoles;
 	}
 	
+	@Transient
+	public int getRoleId(){
+		Iterator itr=this.employRoles.iterator();
+		if(itr.hasNext()){
+			MainEmployeeRole role=(MainEmployeeRole) itr.next();
+			if(role.getRole().getRoleId()!=null){
+				return role.getRole().getRoleId();
+			}
+		}
+		return 0;
+	}
 
 	
 }

@@ -8,8 +8,8 @@ import com.cn.bccm.model.MainRole;
 
 public interface IMainRoleService   {
 	public List<MainRole> list(Object[] params);
-	public void saveOrUpdateRole(MainRole employee)throws Exception;
-	public void deleteRole(MainRole employee);
+	public void saveOrUpdateRole(MainRole role)throws Exception;
+	public void deleteRole(MainRole role);
 	public MainRole getRole(int id);
 	public List<MainRole> listByPage(String hql, int pageNo,int pageSize,Map<String,Object> params);
 	

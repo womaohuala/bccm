@@ -7,11 +7,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * MainDepartment entity. @author MyEclipse Persistence Tools
@@ -28,6 +33,7 @@ public class MainDepartment implements java.io.Serializable {
 	private String deptHead;
 	private String deptPhone;
 	private Set<MainEmployee> employees;
+	private MainDepartment deptParent;
 
 	// Constructors
 
@@ -100,7 +106,22 @@ public class MainDepartment implements java.io.Serializable {
 	public void setEmployees(Set<MainEmployee> employees) {
 		this.employees = employees;
 	}
-	
+
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})
+	@JoinColumn(name = "dept_parent")
+	public MainDepartment getDeptParent() {
+		return deptParent;
+	}
+
+	public void setDeptParent(MainDepartment deptParent) {
+		this.deptParent = deptParent;
+	}
+
+	@Transient
+	public Integer getDeptParentId() {
+		return this.deptParent.getDeptId();
+	}
+
 	
 
 }

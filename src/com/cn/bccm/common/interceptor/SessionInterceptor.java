@@ -40,11 +40,13 @@ public class SessionInterceptor implements HandlerInterceptor {
 				response.sendRedirect(request.getContextPath()+"/login.html");
 				return false;
 			}else if(!checkUrl(permissions,request.getServletPath())){
+				System.out.println(request.getServletPath()+"没有权限");
 				response.sendRedirect(request.getContextPath()+"/notAuth.jsp");
 				return false;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			response.sendRedirect(request.getContextPath()+"/login.html");
 			return false;
 		}
@@ -64,7 +66,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 			return true;
 		}
 		MainPermission mainPermission=mps.getByAction(requestURI);
-		System.out.println(requestURI);
+//		System.out.println(requestURI);
 		if(StringUtil.isNotEmpty(mainPermission)){
 			perid=mainPermission.getPerId();
 		}

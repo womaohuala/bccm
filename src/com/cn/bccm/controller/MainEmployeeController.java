@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,11 +32,15 @@ import com.cn.bccm.model.CoopCompany;
 import com.cn.bccm.model.CoopProject;
 import com.cn.bccm.model.MainDepartment;
 import com.cn.bccm.model.MainEmployee;
+import com.cn.bccm.model.MainEmployeeRole;
 import com.cn.bccm.model.MainPlan;
+import com.cn.bccm.model.MainRole;
 import com.cn.bccm.service.ICoCompanyService;
 import com.cn.bccm.service.ICoProjectService;
 import com.cn.bccm.service.IMainDepartmentService;
+import com.cn.bccm.service.IMainEmployeeRoleService;
 import com.cn.bccm.service.IMainEmployeeService;
+import com.cn.bccm.service.IMainRoleService;
 import com.cn.bccm.util.ConstantValues;
 
 
@@ -49,6 +55,12 @@ public class MainEmployeeController {
 
 	@Autowired
 	private IMainEmployeeService employeeService;
+	
+	@Autowired
+	private IMainRoleService roleService;
+	
+	@Autowired
+	private IMainEmployeeRoleService employeeRoleService;
 
 	
 	@RequestMapping("index")
@@ -95,7 +107,10 @@ public class MainEmployeeController {
 	public String add(HttpServletRequest request){
 		List<MainDepartment> deptList = departmentService.list(new Object[]{});
 		request.setAttribute("deptList", deptList);
-		return "employee/employeeadd";
+		
+		List<MainRole> roleList = roleService.list(new Object[]{});
+		request.setAttribute("roleList", roleList);
+		return "employee/employeesave";
 	}
 	
 	@RequestMapping("employeeedit")
@@ -105,7 +120,9 @@ public class MainEmployeeController {
 		request.setAttribute("employee", employee);
 		List<MainDepartment> deptList = departmentService.list(new Object[]{});
 		request.setAttribute("deptList", deptList);
-		return "employee/employeeedit";
+		List<MainRole> roleList = roleService.list(new Object[]{});
+		request.setAttribute("roleList", roleList);
+		return "employee/employeesave";
 	}
 	
 	@RequestMapping("employeedetail")
@@ -138,6 +155,7 @@ public class MainEmployeeController {
 		String empRemark = request.getParameter("empRemark");
 		String empUserName = request.getParameter("empUserName");
 		String empPassword = request.getParameter("empPassword");
+		String roleId = request.getParameter("roleId");
 		
 		
 		ValidateUtil valid = new ValidateUtil();
@@ -192,7 +210,30 @@ public class MainEmployeeController {
 			return result;
 		}
 		employee.setEmpPassword(empPassword);
+		
 		employeeService.saveOrUpdateEmployee(employee);
+		
+		int flag=employeeRoleService.deleteByEmp(roleId,employee.getEmpId());
+		if(flag>=0){
+			String[] roleIds=roleId.split(",");
+			
+			for(String rId:roleIds){
+				//添加用户角色
+				if(!StringUtils.isBlank(rId)){
+					try {
+						MainRole role=roleService.getRole(Integer.parseInt(rId));
+						MainEmployeeRole mer=new MainEmployeeRole();
+						
+						mer.setEmployee(employee);
+						mer.setRole(role);
+						employeeRoleService.saveOrUpdateMainEmployeeRole(mer);
+					} catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 		result.setResult(true);
 		if(StringUtils.isBlank(empId)){
 			result.setResultInfo("添加成功");

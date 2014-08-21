@@ -31,6 +31,7 @@ import com.cn.bccm.model.CoopProject;
 import com.cn.bccm.model.MainDepartment;
 import com.cn.bccm.model.MainEmployee;
 import com.cn.bccm.model.MainPlan;
+import com.cn.bccm.model.MainRole;
 import com.cn.bccm.service.ICoCompanyService;
 import com.cn.bccm.service.IMainDepartmentService;
 import com.cn.bccm.util.ConstantValues;
@@ -109,6 +110,8 @@ public class MainDepartmentController {
 		String deptInfo = request.getParameter("deptInfo");
 		String deptHead = request.getParameter("deptHead");
 		String deptPhone = request.getParameter("deptPhone");
+		String deptParent = request.getParameter("deptParent");
+		
 		
 		//CoopCompany company = new CoopCompany();
 		MainDepartment department = new MainDepartment();
@@ -122,6 +125,9 @@ public class MainDepartmentController {
 				return result;
 			}
 		}
+		//父节点机构
+		MainDepartment md=departmentService.getDepartment(Integer.parseInt(deptParent));
+		department.setDeptParent(md);
 		if(StringUtils.isBlank(deptName)){
 			result.setResultInfo("部门名称不能为空");
 			return result;
@@ -156,17 +162,30 @@ public class MainDepartmentController {
 		return result;
 	}
 	
-	
-	
+	/**
+	 * 删除部门
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("delete")
-	public void delete(HttpServletRequest request,HttpServletResponse response){
-		String id = request.getParameter("id");
-		MainDepartment department = departmentService.getDepartment(Integer.parseInt(id));
-		departmentService.deleteDepartment(department);
+	@ResponseBody
+	public Result<String> delete(HttpServletRequest request) throws Exception {
+		Result<String> result = new Result<String>();
+		
 		try {
-			response.sendRedirect("index.shtml");
-		} catch (IOException e) {
+			String id = request.getParameter("id");
+			MainDepartment department = departmentService.getDepartment(Integer.parseInt(id));
+			departmentService.deleteDepartment(department);
+			result.setResult(true);
+			result.setResultInfo("删除成功");
+		} catch (Exception e) {
+			// TODO: handle exception
+			// TODO: handle exception
 			e.printStackTrace();
+			result.setResult(false);
+			result.setResultInfo("操作失败");
 		}
+		return result;
 	}
 }

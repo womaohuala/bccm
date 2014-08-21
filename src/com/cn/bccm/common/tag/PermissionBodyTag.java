@@ -30,7 +30,6 @@ public class PermissionBodyTag extends BodyTagSupport {
 		// @SuppressWarnings("unchecked")
 		// List<String> permsList = (List<String>) pageContext.getSession()
 		// .getAttribute(COMMON_CONSTANT.SESSION_USER_RIGHT);
-		System.out.println("ddsfsdfs%%%%5");
 		HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();//获取页面Servlet中 request 和out 对象
 		String permissions=request.getSession().getAttribute(Constant.SESSION_PERMISSION).toString();
 		if (hasPermission(permissions,permissionId)) {

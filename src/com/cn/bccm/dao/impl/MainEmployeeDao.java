@@ -17,7 +17,7 @@ import com.cn.bccm.model.MainRole;
 import com.cn.bccm.model.User;
 
 @Repository
-public class MainEmployeeDao extends BaseHibernateDAO<MainRole, Integer> implements IMainRoleDao {
+public class MainEmployeeDao extends BaseHibernateDAO<MainEmployee, Integer> implements IMainEmployeeDao {
 
 
 }
