@@ -54,7 +54,7 @@ public class MainEmployeeController {
 	private IMainDepartmentService departmentService;
 
 	@Autowired
-	private IMainEmployeeService employeeService;
+	private IMainEmployeeService employeeService; 
 	
 	@Autowired
 	private IMainRoleService roleService;
