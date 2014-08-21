@@ -13,6 +13,7 @@
 <script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" ></script>
 <link rel="StyleSheet" href="../js/dtree/dtree.css" type="text/css" />
 <script type="text/javascript" src="../js/dtree/dtree.js"></script>
+<script type="text/javascript" src="../js/base.js"></script>
 <script type="text/javascript">
 
     function getProject(value){
@@ -40,65 +41,37 @@
      }
      
      
-     function getEmployee(value){
-       var employee= $("#employee");
-       employee.empty();
-       if(value.length==0){
-          employee.append("<option value=''>请选择</option>");
-       }else{
-        var employees=new Array();
-         for(var i=0;i<deptMap.length;i++){
-           if(deptMap[i].deptId==value){
-             employees=deptMap[i].employees;
-             break;
-           }
-         }
-         if(employees.length<1){
-            employee.append("<option value=''>无员工</option>");
-         }else{
-           employee.append("<option value=''>请选择</option>");
-           for(var i=0;i<employees.length;i++){
-           employee.append("<option value='"+employees[i].empId+"'>"+employees[i].empName+"</option>");
-           }
-         }
-       }
-     }
-     
-     
-     	
-	$(document).ready(function() { 
-	    $('#form1').ajaxForm({ 
-	        dataType:  'json', 
-	        beforeSubmit:validForm,
-	        success: processJson,
-	        error: processError
-	    }); 
-	 });
-	 
-	 /*
-	 function  processJson(data){
-		 parent.layer.msg(data.resultInfo);
-		 parent.closeWindow();	    
-	 }
-	 */
-	 function  processJson(data){
-		    //1修改成功
-		    if(data.result){
-		    	parent.layer.alert(data.resultInfo, 1, function(){
-			    	 parent.location.reload(); //自动关闭后可做一些刷新页面等操作
-				     parent.layer.closeAll()
-			    })
-			}else{
-				parent.layer.msg(data.resultInfo,1);
-			}
-	 }
+    function save(){
+		if(validForm()){
+			idSt=idSt.replace(",0,",",")
+			document.getElementById("roleId").value=idSt;
+			$('#form1').submit();
+		}
+		return false;
+	}
+
 	 function validForm(){
-	   return true;
-	 }
-	 
-	 
-	 function processError(){
-	   parent.layer.msg('提交失败');
+		 var department=document.getElementById("department").value;
+		 var empName=document.getElementById("empName").value;
+		 var empUserName=document.getElementById("empUserName").value;
+		 var empPassword=document.getElementById("empPassword").value;
+		 if(department==""){
+			 parent.layer.msg("部门不可为空！");
+			 return false;
+		 }
+		 if(empName==""){
+			 parent.layer.msg("职员姓名不可为空！");
+			 return false;
+		 }
+		 if(empUserName==""){
+			 parent.layer.msg("用户名不可为空！");
+			 return false;
+		 }
+		 if(empPassword==""){
+			 parent.layer.msg("密码不可为空！");
+			 return false;
+		 }
+		 return true
 	 }
 	 
 </script>
@@ -111,6 +84,7 @@
         </div>-->
         <div class="ny_right_con2" style="border:none; margin:0 15px;">
         <form action="employeesave.shtml" id="form1" name="form1" method="post">
+         <input type="hidden" name="empId" id="empId" value="${employee.empId}" />
         	<table class="table_class4">
         		 <tr>
                 	<td class="tdleft2">所属部门：</td>
@@ -118,81 +92,78 @@
                 	  <select class="select_css4" id="department" name="department" onchange="getProject(this.value);">
 	                	  <option value="">请选择</option>
 	                	  <c:forEach var="dept" items="${deptList}">
-	                	    <option value="${dept.deptId}">${dept.deptName}</option>
+	                	    <option value="${dept.deptId}"  <c:if test="${dept.deptId==employee.department.deptId}">selected</c:if>>${dept.deptName}</option>
 	                	  </c:forEach>
                 	  </select>
                 	 </td>
                     <td class="tdleft2">职员姓名：</td>
-                    <td class="tdright2"><input type="text" class="input_css3" name="empName" id="empName"/></td>
+                    <td class="tdright2"><input type="text" class="input_css3" name="empName" id="empName" value="${employee.empName}" /></td>
                 </tr>
                 
             	<tr>
                 	<td class="tdleft2">职员职能：</td>
-                	<td class="tdright2"><input type="text" class="input_css3" name="empJob" id="empJob"/></td>
+                	<td class="tdright2"><input type="text" class="input_css3" name="empJob" id="empJob" value="${employee.empJob}" /></td>
                     <td class="tdleft2">职员性别：</td>
                     <td class="tdright2">
                     	<select class="select_css4" id="empSex" name="empSex" onchange="getProject(this.value);">
-	                	  <option value="1">男性</option>
-	                	  <option value="2">女性</option>
+	                	  <option value="1" <c:if test="${employee.empSex==1}">selected</c:if> >男性</option>
+	                	  <option value="2" <c:if test="${employee.empSex==2}">selected</c:if> >女性</option>
                 	  </select>
                     </td>
                 </tr>
                   <tr>
                 	<td class="tdleft2">联系电话：</td>
-                	<td class="tdright2"><input type="text"  class="input_css3" id="empPhone" name="empPhone" /></td>
+                	<td class="tdright2"><input type="text"  class="input_css3" id="empPhone" name="empPhone" value="${employee.empPhone}" /></td>
                     <td class="tdleft2">备注：</td>
-                    <td class="tdright2"><input type="text"  class="input_css3" id="empRemark" name="empRemark" /></td>
+                    <td class="tdright2"><input type="text"  class="input_css3" id="empRemark" name="empRemark" value="${employee.empRemark}" /></td>
                 </tr>
                 <tr>
                 	<td class="tdleft2">登陆账号：</td>
-                	<td class="tdright2"><input type="text"  class="input_css3" id="empUserName" name="empUserName" /></td>
+                	<td class="tdright2"><input type="text"  class="input_css3" id="empUserName" name="empUserName" value="${employee.empUserName}" /></td>
                     <td class="tdleft2">登陆密码：</td>
-                    <td class="tdright2"><input type="text"  class="input_css3" id="empPassword" name="empPassword" /></td>
+                    <td class="tdright2"><input type="text"  class="input_css3" id="empPassword" name="empPassword" value="${employee.empPassword}" /></td>
                 </tr>
                 
-                 <tr>
+                  <tr>
                 	<td class="tdleft2">角色选择：</td>
-                	
-                	<td class="tdright2">
-                	  <%--<select class="select_css4" id="roleId" name="roleId" >
+                	<td class="tdright2"><%--
+                	  <select class="select_css4" id="roleId" name="roleId" >
 	                	  <option value="">请选择</option>
 	                	  <c:forEach var="role" items="${roleList}">
-	                	    <option value="${role.roleId}">${role.roleName}</option>
+	                	    <option value="${role.roleId}" ${role.roleId==employee.roleId?'selected="selected" ':'' }>${role.roleName}</option>
 	                	  </c:forEach>
                 	  </select>
                 	 --%>
-                	 <!-- 角色树 -->
+                	  <!-- 角色树 -->
+                	  <input type="hidden"  id="roleId" name="roleId" value=""/>
 					<script type="text/javascript">
+							var ishead=false;
 							mytree = new dTree('mytree');
 							mytree.config.useCookies=false;
 							mytree.config.useCheckbox = true;  //设置复选
 							mytree.add(0,-1,'角色列表',false);
-							
-							<c:forEach var="obj" items="${roleList}"> 
-								mytree.add("${obj.roleId}","0","${obj.roleName}",false);
-							</c:forEach> 
-							document.write(mytree);
-							mytree.openAll();
-							
 							//已有角色权限选中
 							idSt=",";
 							<c:forEach var="obj" items="${employee.employRoles}"> 
-								idSt+="${obj.roleId}"+",";
+								idSt+="${obj.role.roleId}"+",";
 							</c:forEach> 
-							var roles=idSt.split(",");
-							for(var i=0;i<roles.length;i++){
-								if(roles[i]!=""&&roles[i]!=null){
-									mytree.selectCheckboxMe(roles[i]);
-									mytree.selectCheckboxMe(0);
+
+							<c:forEach var="obj" items="${roleList}"> 
+								var flag=false;
+								if(idSt.indexOf(","+"${obj.roleId}"+",")>-1){
+									flag=true;
+									ishead=true;
 								}
-							}
-										
+								mytree.add("${obj.roleId}","0","${obj.roleName}",false,flag);
+							</c:forEach> 
+							document.write(mytree);
+							mytree.openAll();
+							if(ishead)mytree.selectCheckboxMe(0);
+							
 					</script>
                 	 </td>
-                	 
                 </tr>
-                
-                <tr><td colspan="4"><div class="btn_common"><a href="#" onclick="$('#form1').submit();return false;">提交</a></div></td></tr>
+                <tr><td colspan="4"><div class="btn_common"><a href="#" onclick="return save();">提交</a></div></td></tr>
             </table>
             </form>
         </div>
