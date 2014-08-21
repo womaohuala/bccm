@@ -47,7 +47,7 @@
 					
 					<c:forEach var="obj" items="${perList}"> 
 						var flag=false;
-						if(idSt.indexOf("${obj.perId}")>-1){
+						if(idSt.indexOf(","+"${obj.perId}"+",")>-1){
 							flag=true;
 							ishead=true;
 						}
