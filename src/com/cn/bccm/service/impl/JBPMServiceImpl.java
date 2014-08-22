@@ -99,7 +99,7 @@ public class JBPMServiceImpl implements JBPMService {
 		String queryString="from Staff where staffName='"+staffName+"'";
 		Staff staff = staffDAO.list(queryString, new HashMap<String, Object>()).get(0);
 		*/
-		String queryString = " from MainEmployee where empName='"+staffName+"'";
+		String queryString = " from MainEmployee where empId='"+staffName+"'";
 		MainEmployee employee = employeeDao.list(queryString, new HashMap<String, Object>()).get(0);
 		//Staff staff =staffDAO.findStaff(queryString).get(0);
 		Leave leave=new Leave();
@@ -160,10 +160,27 @@ public class JBPMServiceImpl implements JBPMService {
 		map.put("leaveContent", leaveContent);
 		jBPMUtil.completeTask(taskId, map);
 	}
+	
+	
+	public void completeTask(String taskId, Map<String,Object> variables) {
+		jBPMUtil.completeTask(taskId, variables);
+	}
 
 	public InputStream findInstancePic(String instanceId) {
 		return jBPMUtil.findProcessInstancePic(instanceId);
 	}
+
+	public void setVariable(String executionId, String varName, Object varValue) {
+		jBPMUtil.setVarValue(executionId, varName, varValue);
+	}
+
+	public String getExectionIdByTaskId(String taskId) {
+		return jBPMUtil.getTask(taskId).getExecutionId();
+	}
+	
+	
+	
+	
 
 	
 

@@ -3,6 +3,7 @@ package com.cn.bccm.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 import org.jbpm.api.ProcessDefinition;
 import org.jbpm.api.ProcessInstance;
@@ -27,6 +28,8 @@ public interface JBPMService {
 	
 	public void completeTask(String taskId,String result);		//经理完成任务，返回一个result结果
 	
+	public void completeTask(String taskId,Map<String,Object> variables);  //完成任务并设置变量
+	
 	public void completeTask(String taskId);			//按照任务Id完成该任务
 	
 	public List<Leave> getLeaveDetail(String taskId);	//根据任务Id找到转换成实例ID,从数据库中找到这条记录
@@ -42,6 +45,10 @@ public interface JBPMService {
 	public List<ProcessDefinition> getAllPd();		//获得所有流程定义
 	
 	public InputStream findInstancePic(String instanceId);		//获得所有流程定义
+	
+	public void setVariable(String executionId,String varName,Object varValue);
+	
+	public String getExectionIdByTaskId(String taskId);
 	
 	
 }
