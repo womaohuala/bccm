@@ -15,10 +15,10 @@
 
 </head>
 <body  style="background:#e3e8ee;" id="top">
-你没有权限访问！
-<bccm:permission permissionId="1">
-你没有权限访问！@
-
-</bccm:permission>
+<%
+	String ss=request.getParameter("outSt");
+	ss=new String(ss.getBytes("ISO-8859-1"), "GBK");
+%>
+<%=ss %>
 </body>
 </html>

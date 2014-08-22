@@ -1,5 +1,7 @@
 package com.cn.bccm.common.interceptor;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,6 +26,8 @@ public class SessionInterceptor implements HandlerInterceptor {
 	private IMainPermissionService mps;
 	
 	private String[] uncheckUrl;
+	
+	private String outSt;
 
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
@@ -41,7 +45,9 @@ public class SessionInterceptor implements HandlerInterceptor {
 				return false;
 			}else if(!checkUrl(permissions,request.getServletPath())){
 				System.out.println(request.getServletPath()+"没有权限");
-				response.sendRedirect(request.getContextPath()+"/notAuth.jsp");
+				outSt="你没有操作"+outSt+"的权限！"+request.getServletPath();
+				outSt=java.net.URLEncoder.encode(outSt);
+				response.sendRedirect(request.getContextPath()+"/notAuth.jsp?outSt="+outSt);
 				return false;
 			}
 		} catch (Exception e) {
@@ -69,6 +75,9 @@ public class SessionInterceptor implements HandlerInterceptor {
 //		System.out.println(requestURI);
 		if(StringUtil.isNotEmpty(mainPermission)){
 			perid=mainPermission.getPerId();
+			outSt=mainPermission.getPerName();
+		}else{
+			outSt="请求路径不在权限表中";
 		}
 		if(permissions.contains(","+perid+",")){
 			return true;
