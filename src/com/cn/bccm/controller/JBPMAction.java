@@ -5,8 +5,10 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +27,13 @@ import com.cn.bccm.common.util.CommonUtil;
 import com.cn.bccm.common.util.JBPMUtil;
 import com.cn.bccm.dao.base.Page;
 import com.cn.bccm.model.Leave;
+import com.cn.bccm.model.MainDepartment;
 import com.cn.bccm.model.MainEmployee;
+import com.cn.bccm.model.DTO.EmployeeDto;
+import com.cn.bccm.service.IMainDepartmentService;
 import com.cn.bccm.service.JBPMService;
 import com.cn.bccm.service.LoginService;
+import com.cn.bccm.service.impl.MainDepartmentService;
 /**
  * 
  * @author ht 
@@ -44,6 +50,8 @@ public class JBPMAction {
 	protected JBPMService jBPMService;
 	@Autowired
 	private LoginService loginService;
+	@Autowired
+	private IMainDepartmentService departmentService;
 	
 	@Autowired
 	private JBPMUtil jbpmUtil;
@@ -67,7 +75,6 @@ public class JBPMAction {
 		request.setAttribute("leaveList", leaveList);
 		request.setAttribute("taskId", taskId);
 		return "jbpm/index";
-		//return "redetail";
 	}
 	
 	@RequestMapping("exam")
@@ -82,18 +89,10 @@ public class JBPMAction {
 		map.put("boss", "boss");
 		String executionId = jBPMService.getExectionIdByTaskId(taskId);
 		jBPMService.setVariable(executionId, "boss", "9");
-		//jBPMService.completeTask(taskId, map);
 		jBPMService.completeTask(taskId, resultStr);	//完成任务，进入下一个流程
 		result.setResult(true);
 		result.setResultInfo("提交成功");
 		return result;
-		/*
-		try {
-			response.sendRedirect("getTasks.shtml");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		*/
 	}
 	
 	@RequestMapping("loginIn")
@@ -101,17 +100,44 @@ public class JBPMAction {
 		String staffName = request.getParameter("staffName");
 		String staffPsw = request.getParameter("staffPsw");
 		if(loginService.isLogin(staffName, staffPsw)){
-			//ActionContext.getContext().getSession().put("staffName", staffName);	//保存当前用户
 			request.getSession().setAttribute("staffName", staffName);
 			return "jbpm/index";
-			//return "index";
 		}
 			return "jbpm/login";
-			//return "login";
 	}
 	
 	@RequestMapping("requestBegin")
 	public String requestBegin(HttpServletRequest request){
+		List<EmployeeDto> employeesDto = new ArrayList<EmployeeDto>();
+		//EmployeeDto employeeDto = null;
+		List<MainDepartment> departments = departmentService.listAll();
+		for(int i=0;i<departments.size();i++){
+			MainDepartment department = departments.get(i);
+			EmployeeDto  employeeDto = new EmployeeDto();
+			employeeDto.setId(Constant.departmentType+department.getDeptId());
+			employeeDto.setName(department.getDeptName());
+			employeeDto.setType(Constant.departmentType);
+			if(department.getDeptId()==department.getDeptParent().getDeptId()){
+				employeeDto.setParentId(""+Constant.rootId);
+			}else{
+				employeeDto.setParentId(Constant.departmentType+department.getDeptParent().getDeptId());
+			}
+			employeesDto.add(employeeDto);
+			
+			Set<MainEmployee> employees = department.getEmployees();
+			Iterator<MainEmployee> it = employees.iterator();
+			while(it.hasNext()){
+				MainEmployee employee = it.next();
+				EmployeeDto employeeDto2 = new EmployeeDto();
+				employeeDto2.setId(Constant.employeeType+employee.getEmpId());
+				employeeDto2.setName(employee.getempName());
+				employeeDto2.setParentId(Constant.departmentType+department.getDeptId());
+				employeeDto2.setType(Constant.employeeType);
+				employeesDto.add(employeeDto2);
+			}
+		}
+		System.out.println("size:"+employeesDto.size());
+		request.setAttribute("employeesDto", employeesDto);
 		return "jbpm/request";
 	}
 	
@@ -124,8 +150,6 @@ public class JBPMAction {
 			jBPMService.deployNew(resourceName);
 		}
 		String pdId=jBPMService.getAllPd().get(0).getId();	//获得第一个Id
-		//String staffName = (String) request.getSession().getAttribute("staffName");
-		//String staffName = ((MainEmployee)request.getSession().getAttribute(Constant.SESSION_USER)).getempName();
 		String staffName = String.valueOf(((MainEmployee)request.getSession().getAttribute(Constant.SESSION_USER)).getEmpId());
 		String leaveLong = request.getParameter("leaveLong");
 		if(StringUtils.isBlank(leaveLong)){
@@ -148,13 +172,6 @@ public class JBPMAction {
 		result.setResult(true);
 		result.setResultInfo("提交成功");
 		return result;
-		/*
-		try {
-			response.sendRedirect("getTasks.shtml");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		*/
 	}
 	
 	//处理被驳回的请求

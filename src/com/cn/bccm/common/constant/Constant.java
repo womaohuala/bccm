@@ -9,6 +9,12 @@ public class Constant {
 	
 	public static final int PAGE_SIZE = 10;
 	
+	public static final int rootId = 0;
+	
+	public static final String departmentType = "a";
+	
+	public static final String employeeType = "b";
+	
 	public static class PersonDuty{
 		/**
 		 * 0-管理员，1-部门管理员，2-普通人员

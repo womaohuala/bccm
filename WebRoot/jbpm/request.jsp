@@ -11,6 +11,8 @@
 <script src="../js/jquery-1.11.1.min.js"  type="text/javascript"></script>
 <script src="../js/jquery.form.js"  type="text/javascript"></script>
 <script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" ></script>
+<script type="text/javascript" src="../js/dtree/dtree.js"></script>
+<script type="text/javascript" src="../js/base.js"></script>
 <script type="text/javascript">
 
     function getProject(value){
@@ -120,6 +122,35 @@
                 	 	<input type="text" class="input_css3" name="leaveLong" id="leaveLong"></input>
                 	 </td>
         		</tr>
+        		<tr>
+                	<td class="tdleft2">下一位处理人员：</td>
+                	<td class="tdright2" colspan="3">
+                			<input type="hidden"  id="roleId" name="roleId" value=""/>
+                			<script type="text/javascript">
+							var ishead=false;
+							mytree = new dTree('mytree');
+							mytree.config.useCookies=false;
+							mytree.config.useCheckbox = true;  //设置复选
+							mytree.add(0,-1,'职员列表',true);
+							//已有角色权限选中
+							idSt=",";
+							//alert('size:'+${fn:length(employeesDto)});
+							<c:forEach var="obj" items="${employeesDto}"> 
+								//alert('aa:'+'${obj.type}');
+								if("${obj.type}"=='a'){
+									mytree.add("${obj.id}","${obj.parentId}","${obj.name}",true,false);
+								}else{
+									mytree.add("${obj.id}","${obj.parentId}","${obj.name}",false,false);	
+								}
+								
+							</c:forEach> 
+							document.write(mytree);
+							mytree.openAll();
+							if(ishead)mytree.selectCheckboxMe(0);
+							
+					</script>
+                	</td>
+                </tr>
             	<tr>
                 	<td class="tdleft2">申请原因：</td>
                 	<td class="tdright2" colspan="3"><textarea class="input_css3" rows="5" cols="40" name="leaveContent"></textarea></td>
