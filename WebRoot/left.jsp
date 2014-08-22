@@ -35,7 +35,7 @@
          <bccm:permission permissionId="51">
         	<li><a href="role/index.shtml" target="main">角色管理</a></li>
          </bccm:permission>
-         <bccm:permission permissionId="51">
+         <bccm:permission permissionId="69">
         	<li><a href="permission/index.shtml" target="main">权限管理</a></li>
          </bccm:permission>
         </ul>
