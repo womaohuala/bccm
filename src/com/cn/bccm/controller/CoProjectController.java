@@ -102,7 +102,11 @@ public class CoProjectController {
 	public String add(HttpServletRequest request){
 		List<CoopCompany> comList = compnayService.list(new Object[]{});
 		request.setAttribute("comList", comList);
-		return "project/projectadd";
+		List<MainEmployee> employeeList=employeeService.list(new Object[]{});
+		request.setAttribute("employeeList", employeeList);
+		List<MainDepartment> deptList=departmentService.list(new Object[]{});
+		request.setAttribute("deptList", deptList);
+		return "project/projectsave";
 	}
 	
 	@RequestMapping("projectedit")
@@ -116,7 +120,7 @@ public class CoProjectController {
 		request.setAttribute("employeeList", employeeList);
 		List<MainDepartment> deptList=departmentService.list(new Object[]{});
 		request.setAttribute("deptList", deptList);
-		return "project/projectedit";
+		return "project/projectsave";
 	}
 	
 	@RequestMapping("projectdetail")
@@ -126,6 +130,10 @@ public class CoProjectController {
 		request.setAttribute("project", project);
 		List<CoopCompany> comList = compnayService.list(new Object[]{});
 		request.setAttribute("comList", comList);
+		List<MainEmployee> employeeList=employeeService.list(new Object[]{});
+		request.setAttribute("employeeList", employeeList);
+		List<MainDepartment> deptList=departmentService.list(new Object[]{});
+		request.setAttribute("deptList", deptList);
 		return "project/projectdetail";
 	}
 	
@@ -148,6 +156,7 @@ public class CoProjectController {
 		String endTime = request.getParameter("endTime");
 		String proInfo = request.getParameter("proInfo");
 		String remark = request.getParameter("remark");
+		String proEmp = request.getParameter("proEmp");
 		
 		
 		ValidateUtil valid = new ValidateUtil();
@@ -204,6 +213,8 @@ public class CoProjectController {
 			return result;
 		}
 		project.setEndTime(DateUtil.fmtStrTime(endTime, "yyyy-MM-dd"));
+		
+		project.setProEmp(proEmp);
 		projectService.saveOrUpdateProject(project);
 		result.setResult(true);
 		if(StringUtils.isBlank(proId)){

@@ -27,23 +27,13 @@
 	 });
 	 
 	function save(){
-		if(validForm()){
+		if(validForm('#form1')){
 			idSt=idSt.replace(",0,",",")
 			document.getElementById("rolePer").value=idSt;
 			$('#form1').submit();
 		}
 		return false;
 	}
-
-	 function validForm(){
-		 var roleName=document.getElementById("roleName").value;
-		 var roleInfo=document.getElementById("roleInfo").value;
-		 if(roleName==""){
-			 parent.layer.msg("角色名称不可为空！");
-			 return false;
-		 }
-		 return true
-	 }
 
 </script>
 <body  style="background:#e3e8ee;" id="top">
@@ -58,9 +48,9 @@
         	<table class="table_class4">
         		 <tr>
                     <td class="tdleft2">角色名称：</td>
-                    <td class="tdright2"><input type="text" class="input_css3" name="roleName" id="roleName" value="${role.roleName }"/></td>
+                    <td class="tdright2"><input type="text" class="input_css3" name="roleName" info="角色名称" id="roleName" value="${role.roleName }"/></td>
                 	<td class="tdleft2">角色描述：</td>
-                	<td class="tdright2"><input type="text" class="input_css3" name="roleInfo" id="roleInfo" value="${role.roleInfo}" /></td>
+                	<td class="tdright2"><input type="text" class="input_css3" name="roleInfo" info="角色描述" id="roleInfo" value="${role.roleInfo}" /></td>
                 </tr>
                 
             	<tr>

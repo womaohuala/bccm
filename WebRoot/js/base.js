@@ -1,4 +1,23 @@
 
+
+ 
+	//验证form表单是否填写空值，需判断的表单须有info属性
+	 function validForm(frm) {
+		 var flag=true;
+	     var a = $(frm).serializeArray();
+	     $.each(a, function () {
+		     if(this.value==""){
+					var info=document.getElementById(this.name).getAttribute("info");
+					if(info!=null&&info!=""){
+						parent.layer.msg(info+"不可为空!");
+						flag=false;
+					}
+				 }
+	     });
+
+	     return flag;
+	 }
+	 
 function newIframe(src,title){
   $.layer({
     type: 2,
@@ -13,6 +32,18 @@ function newIframe(src,title){
   });
  }
 
+
+function newIframe1(src,title){
+	$.layer({
+	    type: 2,
+	    border: [0],
+	    title: false,
+	    shadeClose: true,
+	    closeBtn: false,
+	    iframe: {src : src},
+	    area: ['860px', '400px']
+	});
+}
  /*
  function  processJson(data){
 	 parent.layer.msg(data.resultInfo);

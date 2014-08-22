@@ -10,8 +10,9 @@ import com.cn.bccm.model.MainRole;
 
 public interface IMainPermissionService {
 	public List<MainPermission> list(Object[] params);
-	public void saveOrUpdatePermission(MainPermission employee)throws Exception;
-	public void deletePermission(MainPermission employee);
+	public List<MainPermission> listModual(Object[] params);
+	public void saveOrUpdatePermission(MainPermission permission)throws Exception;
+	public void deletePermission(MainPermission permission);
 	public MainPermission getPermission(int id);
 	public List<MainPermission> listByPage(String hql, int pageNo,int pageSize,Map<String,Object> params);
 	

@@ -16,29 +16,6 @@
 <script type="text/javascript" src="../js/base.js"></script>
 <script type="text/javascript">
 
-    function getProject(value){
-       var project= $("#project");
-       project.empty();
-       if(value.length==0){
-          project.append("<option value=''>请选择</option>");
-       }else{
-        var projects=new Array();
-         for(var i=0;i<compMap.length;i++){
-           if(compMap[i].compId==value){
-             projects=compMap[i].projects;
-             break;
-           }
-         }
-         if(projects.length<1){
-            project.append("<option value=''>无项目</option>");
-         }else{
-           project.append("<option value=''>请选择</option>");
-           for(var i=0;i<projects.length;i++){
-           project.append("<option value='"+projects[i].proId+"'>"+projects[i].proName+"</option>");
-           }
-         }
-       }
-     }
      
 
     $(document).ready(function() { 
@@ -50,7 +27,7 @@
      });
      
     function save(){
-		if(validForm()){
+		if(validForm("#form1")){
 			idSt=idSt.replace(",0,",",")
 			document.getElementById("roleId").value=idSt;
 			$('#form1').submit();
@@ -58,30 +35,6 @@
 		return false;
 	}
 
-	 function validForm(){
-		 var department=document.getElementById("department").value;
-		 var empName=document.getElementById("empName").value;
-		 var empUserName=document.getElementById("empUserName").value;
-		 var empPassword=document.getElementById("empPassword").value;
-		 if(department==""){
-			 parent.layer.msg("部门不可为空！");
-			 return false;
-		 }
-		 if(empName==""){
-			 parent.layer.msg("职员姓名不可为空！");
-			 return false;
-		 }
-		 if(empUserName==""){
-			 parent.layer.msg("用户名不可为空！");
-			 return false;
-		 }
-		 if(empPassword==""){
-			 parent.layer.msg("密码不可为空！");
-			 return false;
-		 }
-		 return true
-	 }
-	 
 </script>
 
 </head>
@@ -97,7 +50,7 @@
         		 <tr>
                 	<td class="tdleft2">所属部门：</td>
                 	<td class="tdright2">
-                	  <select class="select_css4" id="department" name="department" onchange="getProject(this.value);">
+                	  <select class="select_css4" id="department" name="department" info="所属部门" >
 	                	  <option value="">请选择</option>
 	                	  <c:forEach var="dept" items="${deptList}">
 	                	    <option value="${dept.deptId}"  <c:if test="${dept.deptId==employee.department.deptId}">selected</c:if>>${dept.deptName}</option>
@@ -105,15 +58,15 @@
                 	  </select>
                 	 </td>
                     <td class="tdleft2">职员姓名：</td>
-                    <td class="tdright2"><input type="text" class="input_css3" name="empName" id="empName" value="${employee.empName}" /></td>
+                    <td class="tdright2"><input type="text" class="input_css3" name="empName" info="职员姓名"  id="empName" value="${employee.empName}" /></td>
                 </tr>
                 
             	<tr>
                 	<td class="tdleft2">职员职能：</td>
-                	<td class="tdright2"><input type="text" class="input_css3" name="empJob" id="empJob" value="${employee.empJob}" /></td>
+                	<td class="tdright2"><input type="text" class="input_css3" name="empJob" id="empJob" info="职员只能"  value="${employee.empJob}" /></td>
                     <td class="tdleft2">职员性别：</td>
                     <td class="tdright2">
-                    	<select class="select_css4" id="empSex" name="empSex" onchange="getProject(this.value);">
+                    	<select class="select_css4" id="empSex" name="empSex" info="职员性别"  onchange="getProject(this.value);">
 	                	  <option value="1" <c:if test="${employee.empSex==1}">selected</c:if> >男性</option>
 	                	  <option value="2" <c:if test="${employee.empSex==2}">selected</c:if> >女性</option>
                 	  </select>
@@ -121,15 +74,15 @@
                 </tr>
                   <tr>
                 	<td class="tdleft2">联系电话：</td>
-                	<td class="tdright2"><input type="text"  class="input_css3" id="empPhone" name="empPhone" value="${employee.empPhone}" /></td>
+                	<td class="tdright2"><input type="text"  class="input_css3" id="empPhone" info="联系电话"  name="empPhone" value="${employee.empPhone}" /></td>
                     <td class="tdleft2">备注：</td>
                     <td class="tdright2"><input type="text"  class="input_css3" id="empRemark" name="empRemark" value="${employee.empRemark}" /></td>
                 </tr>
                 <tr>
                 	<td class="tdleft2">登陆账号：</td>
-                	<td class="tdright2"><input type="text"  class="input_css3" id="empUserName" name="empUserName" value="${employee.empUserName}" /></td>
+                	<td class="tdright2"><input type="text"  class="input_css3" id="empUserName" info="登录账号"  name="empUserName" value="${employee.empUserName}" /></td>
                     <td class="tdleft2">登陆密码：</td>
-                    <td class="tdright2"><input type="text"  class="input_css3" id="empPassword" name="empPassword" value="${employee.empPassword}" /></td>
+                    <td class="tdright2"><input type="text"  class="input_css3" id="empPassword" info="登录密码"  name="empPassword" value="${employee.empPassword}" /></td>
                 </tr>
                 
                   <tr>

@@ -32,6 +32,10 @@ public class MainPermissionService implements IMainPermissionService  {
 	public List<MainPermission> list(Object[] params) {
 		return permissionDao.list("from MainPermission", params);
 	}
+	
+	public List<MainPermission> listModual(Object[] params) {
+		return permissionDao.list("from MainPermission where perParent=0", params);
+	}
 
 	public List<MainPermission> listByPage(String hql, int pageNo, int pageSize,
 			Map<String, Object> params) {

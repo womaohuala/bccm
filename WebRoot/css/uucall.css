@@ -61,6 +61,7 @@ html,body{height:100%}
 		.ny_right_con1 ul li select.select_css1{ float:left; height:24px; width:100px; border:#a5a5a5 1px solid;}
 		input.input_css3{ float:left; height:20px; line-height:20px; width:145px; border:#a5a5a5 1px solid; padding:0px 0px 0px 2px;}
 		input.input_css4{ float:left; height:20px; line-height:20px; width:625px; border:#a5a5a5 1px solid; padding:0px 0px 0px 2px;}
+		input.input_css31{ float:left; height:20px; line-height:20px; width:300px; border:#a5a5a5 1px solid; padding:0px 0px 0px 2px;}
 		textarea.textarea_class1{border:#a5a5a5 1px solid; min-width:500px; width:70%; height:50px;}
 		
 		.ny_right_search{ float:left; width:65px; height:26px; padding-left:10px;}

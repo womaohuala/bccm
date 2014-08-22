@@ -148,6 +148,7 @@ public class ValidateUtil {
 	}
 	
 	public boolean isValidDate(String dateStr, String pattern) {
+		dateStr=dateStr.trim();
 		check = "^\\d{4}-\\d{2}-\\d{2}$";
 		if (!getValidateResult(check, dateStr))
 			return false;

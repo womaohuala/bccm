@@ -12,6 +12,9 @@
 <script src="../js/jquery-1.11.1.min.js"  type="text/javascript"></script>
 <script src="../js/jquery.form.js"  type="text/javascript"></script>
 <script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" ></script>
+<link rel="StyleSheet" href="../js/dtree/dtree.css" type="text/css" />
+<script type="text/javascript" src="../js/dtree/dtree.js"></script>
+<script type="text/javascript" src="../js/base.js"></script>
 <script type="text/javascript">
 
     function getProject(value){
@@ -125,6 +128,42 @@
                 	<td class="tdright2"><input type="text"  class="input_css3 Wdate" id="beginTime" name="beginTime" readonly="readonly"  value="<fmt:formatDate value="${project.beginTime}" pattern="yyyy-MM-dd "/>" onclick="WdatePicker()"/></td>
                     <td class="tdleft2">项目结束时间：</td>
                     <td class="tdright2"><input type="text"  class="input_css3 Wdate" id="endTime" name="endTime"  readonly="readonly" value="<fmt:formatDate value="${project.endTime}" pattern="yyyy-MM-dd "/>" onclick="WdatePicker()"/></td>
+                </tr>
+                <tr>
+                	<td class="tdleft2">项目信息：</td>
+                	<td class="tdright2" colspan="3">
+                    <script type="text/javascript">
+							var ishead=false;
+							mytree = new dTree('mytree');
+							mytree.config.useCookies=false;
+							mytree.config.useCheckbox = true;  //设置复选
+							mytree.add(0,-1,'成员列表',true,false);//第一个是否可选true不可选，第二个是否选中true选中
+							//已有成员选中
+							idSt="${project.proEmp}";
+
+							<c:forEach var="obj1" items="${deptList}"> 
+								var flag=false;
+								if(idSt.indexOf(",d"+"${obj1.deptId}"+",")>-1){
+									flag=true;
+									ishead=true;
+								}
+								mytree.add("d"+"${obj1.deptId}","0","${obj1.deptName}",true,flag);
+							</c:forEach> 
+
+							<c:forEach var="obj" items="${employeeList}"> 
+								var flag=false;
+								if(idSt.indexOf(","+"${obj.empId}"+",")>-1){
+									flag=true;
+									ishead=true;
+								}
+								mytree.add("${obj.empId}","${obj.deptTree}","${obj.empName}",true,flag);
+							</c:forEach> 
+							document.write(mytree);
+							mytree.openAll();
+							if(ishead)mytree.selectCheckboxMe(0);
+							
+					</script>
+                	</textarea></td>
                 </tr>
                 <tr>
                 	<td class="tdleft2">项目信息：</td>
