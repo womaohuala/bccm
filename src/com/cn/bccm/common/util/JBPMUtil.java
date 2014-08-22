@@ -2,8 +2,10 @@ package com.cn.bccm.common.util;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpSession;
@@ -30,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author ht
  * 
  */
-@Component
+//@Component
 public class JBPMUtil {
 	private ProcessEngine processEngine;
 	private RepositoryService repositoryService = null;
@@ -219,6 +221,7 @@ public class JBPMUtil {
 	 */
 	public List<Task> findPersonalTasks(String userName){
 		return taskService.findPersonalTasks(userName);
+		
 	}
 	
 	/**
@@ -242,24 +245,39 @@ public class JBPMUtil {
 		repositoryService.deleteDeploymentCascade(deploymentId);
 	}
 
-	public InputStream findProcessInstancePic(String processInstanceId) {
-		ProcessInstance processInstance = executionService
-				.findProcessInstanceById(processInstanceId);
-
-		String processDefinitionId = processInstance.getProcessDefinitionId();
-
-		ProcessDefinition processDefinition = repositoryService
-				.createProcessDefinitionQuery()
-				.processDefinitionId(processDefinitionId).uniqueResult();
-		/*
-		return repositoryService.getResourceAsStream(
-				processDefinition.getDeploymentId(),
-				processDefinition.getImageResourceName());
+	
+	
+	public void setVarValue(String executionId,String varName,Object varValue){
+		executionService.setVariable(executionId, varName, varValue);
+		
+	}
+	
+	public InputStream findProcessInstancePic(String processInstanceId) {  
+		  
+        ProcessInstance processInstance = executionService  
+                .findProcessInstanceById(processInstanceId);  
+  
+        String processDefinitionId = processInstance.getProcessDefinitionId();  
+  
+        ProcessDefinition processDefinition = repositoryService  
+                .createProcessDefinitionQuery()  
+                .processDefinitionId(processDefinitionId).uniqueResult(); 
+        System.out.println("deploymentid:"+processDefinition.getDeploymentId()+",imageResourceName:"+processDefinition.getImageResourceName());
+        /*
+        return repositoryService.getResourceAsStream(  
+                processDefinition.getDeploymentId(),  
+                processDefinition.getImageResourceName());  
 		*/
-		return repositoryService.getResourceAsStream(
-				processDefinition.getDeploymentId(),
-				"leave.png");
-	}	
+        Set<String> names = repositoryService.getResourceNames(processDefinition.getDeploymentId());
+        Iterator<String> it = names.iterator();
+        while(it.hasNext()){
+        	System.out.println("name:"+it.next());
+        	
+        }
+        return repositoryService.getResourceAsStream(  
+                processDefinition.getDeploymentId(),  
+                "leave.png");  
+	}  
 	
 
 	

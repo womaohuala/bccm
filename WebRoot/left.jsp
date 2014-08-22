@@ -45,7 +45,7 @@
     </div>
     <div class="ny_left_con">
     	<ul>
-        	<li><a href="jbpm/getTasks.shtml?assignee=${sessionScope.session_user.empName}" target="main">查看任务</a></li>
+        	<li><a href="jbpm/getTasks.shtml?assignee=${sessionScope.session_user.empId}" target="main">查看任务</a></li>
         	<li><a href="jbpm/request.shtml" target="main">发起流程</a></li>
          </ul>
         <div class="clear"></div>
