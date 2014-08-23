@@ -813,7 +813,7 @@ dTree.prototype.selectCheckbox=function(nodeId){
 	    	}
 	    }else{
 	    	if(idSt.indexOf(","+value+",")>-1){
-	    		idSt=idSt.replace(value+",", "");
+	    		idSt=idSt.replace(","+value+",", ",");
 	    	}
 	  }
 	  
@@ -849,7 +849,7 @@ dTree.prototype.selectCheckbox=function(nodeId){
 			  if(!this.checkParentNodeCheck(node.pid)){
 				  document.getElementById("c"+this.obj+node.pid).checked=false;
 				  if(idSt.indexOf(","+value+",")>-1){
-			    		idSt=idSt.replace(value+",", "");
+			    		idSt=idSt.replace(","+value+",", ",");
 			    	}
 			  }
 		  }
