@@ -62,4 +62,9 @@ public class MainPermissionService implements IMainPermissionService  {
 		return permissionDao.findUnique("from MainPermission e where e.perId =? ", new Object[]{id});
 	}
 
+	public int deleteByParent(String id) {
+		// TODO Auto-generated method stub
+		return permissionDao.executeUpdate("delete from MainPermission e where e.perParent =? ", new Object[]{Integer.parseInt(id)});
+	}
+
 }

@@ -109,8 +109,9 @@ function addCompany(){
                     &nbsp;<a href="delete.shtml?id=${company.compId}">删除</a>
                     </bccm:permission>
                     <bccm:permission permissionId="6">
-                    &nbsp;<a href="#" onclick="detailCompany(${company.compId})">详情</a></td>
+                    &nbsp;<a href="#" onclick="detailCompany(${company.compId})">详情</a>
                     </bccm:permission>
+                    </td>
 	              </tr>
 		        </c:forEach>
                 

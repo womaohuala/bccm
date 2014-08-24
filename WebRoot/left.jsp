@@ -15,7 +15,7 @@
     </div>
     <div class="ny_left_con">
     	<ul>
-        	 <bccm:permission permissionId="56">
+        	 <bccm:permission permissionId="55">
 			   <li><a href="plan/planlist.shtml" target="main">计划管理</a></li>
               </bccm:permission>
         </ul>
@@ -26,16 +26,16 @@
     </div>
     <div class="ny_left_con">
     	<ul>
-    	<bccm:permission permissionId="35">
+    	<bccm:permission permissionId="32">
         	<li><a href="department/index.shtml" target="main">部门管理</a></li>
          </bccm:permission>
-         <bccm:permission permissionId="43">
+         <bccm:permission permissionId="40">
             <li><a href="employee/index.shtml" target="main">员工管理</a></li>
          </bccm:permission>
-         <bccm:permission permissionId="51">
+         <bccm:permission permissionId="48">
         	<li><a href="role/index.shtml" target="main">角色管理</a></li>
          </bccm:permission>
-         <bccm:permission permissionId="69">
+         <bccm:permission permissionId="68">
         	<li><a href="permission/index.shtml" target="main">权限管理</a></li>
          </bccm:permission>
         </ul>
@@ -46,10 +46,10 @@
     </div>
     <div class="ny_left_con">
     	<ul>
-    	<bccm:permission permissionId="4">
+    	<bccm:permission permissionId="1">
         	<li><a href="company/index.shtml" target="main">合作公司管理</a></li>
          </bccm:permission>
-         <bccm:permission permissionId="12">
+         <bccm:permission permissionId="9">
             <li><a href="project/index.shtml" target="main">合作公司项目管理</a></li>
          </bccm:permission>
         </ul>

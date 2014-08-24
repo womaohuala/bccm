@@ -232,5 +232,34 @@ public class MainPermissionController {
 		}
 		return result;
 	}
+	/**
+	 * 删除模块权限
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("deletemodual")
+	@ResponseBody
+	public Result<String> deletemodual(HttpServletRequest request) throws Exception {
+		Result<String> result = new Result<String>();
+		
+		try {
+			String id=request.getParameter("id");
+			int num=permissionService.deleteByParent(id);
+			if(num>=0){
+				MainPermission permission= permissionService.getPermission(Integer.parseInt(id));
+				permissionService.deletePermission(permission);
+			}
+			result.setResult(true);
+			result.setResultInfo("删除成功");
+		} catch (Exception e) {
+			// TODO: handle exception
+			// TODO: handle exception
+			e.printStackTrace();
+			result.setResult(false);
+			result.setResultInfo("操作失败");
+		}
+		return result;
+	}
 
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="bccm"  uri="bccmTag" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -28,7 +29,7 @@ function edit(id){
 }
 
 function delById(id){
-	var src="delete.shtml?id="+id;
+	var src="deletemodual.shtml?id="+id;
 	del(src);
 }
 
@@ -57,7 +58,9 @@ function detail(id){
                     <li><span class="tdleft">模块名称：</span><input type="text" class="input_css1" value="${perName}" name="perName" id="perName"   /></li>
                 </ul>
  				<div class="ny_right_search"><span class="btn_common"><a href="#" onclick="searchKey()">查询</a></span></div>
+ 				<bccm:permission permissionId="70">
  				<div class="ny_right_search"><span class="btn_common"><a href="#" onclick="add()">增加</a></span></div>
+                </bccm:permission>
             </form>
             </div>
              <div class="clear"></div>
@@ -79,9 +82,15 @@ function detail(id){
  			        <td>${per.perInfo}</td><!--
  			        <td>${role.rolePer}</td>
                     --><td>
+                <bccm:permission permissionId="71">
                     <a href="#" onclick="edit(${per.perId})" >修改</a>&nbsp;
+                </bccm:permission>
+                <bccm:permission permissionId="78">
                     <a href="#" onclick="delById(${per.perId})" >删除</a>&nbsp;
+                </bccm:permission>
+                <bccm:permission permissionId="75">
                     <a href="#" onclick="detail(${per.perId})">详情</a></td>
+                </bccm:permission>
 	              </tr>
 		        </c:forEach>
                 

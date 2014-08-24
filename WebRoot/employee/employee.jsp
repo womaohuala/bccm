@@ -126,8 +126,9 @@ function addEmployee(){
                     &nbsp;<a href="delete.shtml?id=${employee.empId}">删除</a>
                     </bccm:permission>
                     <bccm:permission permissionId="45">
-                    &nbsp;<a href="#" onclick="detailEmployee(${employee.empId})">详情</a></td>
+                    &nbsp;<a href="#" onclick="detailEmployee(${employee.empId})">详情</a>
                     </bccm:permission>
+                    </td>
 	              </tr>
 		        </c:forEach>
                 

@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="bccm"  uri="bccmTag" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -57,7 +58,9 @@ function detail(id){
                     <li><span class="tdleft">角色名称：</span><input type="text" class="input_css1" value="${roleName}" name="roleName" id="roleName"   /></li>
                 </ul>
  				<div class="ny_right_search"><span class="btn_common"><a href="#" onclick="searchKey()">查询</a></span></div>
+ 				<bccm:permission permissionId="49">
  				<div class="ny_right_search"><span class="btn_common"><a href="#" onclick="add()">增加</a></span></div>
+                </bccm:permission>
             </form>
             </div>
              <div class="clear"></div>
@@ -79,7 +82,17 @@ function detail(id){
  			        <td>${role.roleName}</td>
  			        <td>${role.roleInfo}</td><!--
  			        <td>${role.rolePer}</td>
-                    --><td><a href="#" onclick="edit(${role.roleId})">修改</a>&nbsp;<a href="#" onclick="delById(${role.roleId})" >删除</a>&nbsp;<a href="#" onclick="detail(${role.roleId})">详情</a></td>
+                    --><td>
+                    <bccm:permission permissionId="54">
+                    <a href="#" onclick="edit(${role.roleId})">修改</a>
+                    </bccm:permission>
+                    <bccm:permission permissionId="52">
+                    &nbsp;<a href="#" onclick="delById(${role.roleId})" >删除</a>
+                    </bccm:permission>
+                    <bccm:permission permissionId="53">
+                    &nbsp;<a href="#" onclick="detail(${role.roleId})">详情</a>
+                    </bccm:permission>
+                    </td>
 	              </tr>
 		        </c:forEach>
                 

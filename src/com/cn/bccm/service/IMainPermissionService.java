@@ -26,4 +26,10 @@ public interface IMainPermissionService {
 	
 	
 	public MainPermission getById(int i);
+	/**
+	 * 删除模块权限，子权限也删除
+	 * @param url
+	 * @return
+	 */
+	public int deleteByParent(String id);
 }
