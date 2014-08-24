@@ -34,6 +34,29 @@
 		}
 		return false;
 	}
+	 
+	 function selectRadio(id){
+		 rdata=$.ajax({ //一个Ajax过程 
+			 type: "post", //以post方式与后台沟通 
+			 url : "getrole.shtml?id="+id, //与此php页面沟通 
+			 dataType:'json',//从php返回的值以 JSON方式 解释 
+			 success: function(data){//如果调用php成功 
+			 if(data.result){
+				 rdata=data;
+				 idSt=data.object.rolePer;
+				 mytree.clearAllIds(false);
+				 var cidArray=idSt.split(",");
+				 for(var i=0;i<cidArray.length;i++){
+					 if(cidArray[i]!=""){
+						 mytree.selectCheckboxMe(cidArray[i])
+					 }
+				 }
+			 }else{
+				 parent.layer.msg(data.resultInfo,1);
+			 }
+		 } 
+		 }); 
+	 }
 
 </script>
 <body  style="background:#e3e8ee;" id="top">
@@ -52,11 +75,35 @@
                 	<td class="tdleft2">角色描述：</td>
                 	<td class="tdright2"><input type="text" class="input_css3" name="roleInfo" info="角色描述" id="roleInfo" value="${role.roleInfo}" /></td>
                 </tr>
+        		 <tr>
+                 <td class="tdleft2">复制角色权限：</td>
+                 <td class="tdright2">
+                 
+                 <!-- 角色树 -->
+                	  <input type="hidden"  id="roleId" name="roleId" value=""/>
+					<script type="text/javascript">
+							var ishead=false;
+							roletree = new dTree('roletree');
+							roletree.config.useCookies=false;
+							roletree.config.useRadio = true;  //设置raido单选
+							roletree.add(0,-1,'角色列表',false);
+
+							<c:forEach var="obj" items="${roleList}"> 
+								var flag=false;
+								var onclickMethod="selectRadio('"+${obj.roleId}+"')";
+								roletree.add("${obj.roleId}","0","${obj.roleName}",false,flag,onclickMethod);
+							</c:forEach> 
+							document.write(roletree);
+							roletree.openAll();
+							
+					</script>
+                 </td>
+                 </tr>
                 
             	<tr>
-                	<td class="tdleft2">角色权限：</td>
+                	<td class="tdleft2">角色权限设置：</td>
                 	<td class="tdright2">
-                	<!-- 角色树 -->
+                	<!-- 权限树 -->
 					<script type="text/javascript">
 							var ishead=false;
 							mytree = new dTree('mytree');

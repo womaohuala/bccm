@@ -44,8 +44,8 @@ public class SessionInterceptor implements HandlerInterceptor {
 				response.sendRedirect(request.getContextPath()+"/login.html");
 				return false;
 			}else if(!checkUrl(permissions,request.getServletPath())){
-				System.out.println(request.getServletPath()+"没有权限");
 				outSt="你没有操作"+outSt+"的权限！"+request.getServletPath();
+				System.out.println(outSt);
 				outSt=java.net.URLEncoder.encode(outSt);
 				response.sendRedirect(request.getContextPath()+"/notAuth.jsp?outSt="+outSt);
 				return false;

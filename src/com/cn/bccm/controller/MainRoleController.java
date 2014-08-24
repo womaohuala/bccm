@@ -91,6 +91,9 @@ public class MainRoleController {
 	public String add(HttpServletRequest request) throws Exception {
 		List<MainPermission> perList=permissionService.list(new Object[]{});
 		request.setAttribute("perList", perList);
+		
+		List<MainRole> roleList = roleService.list(new Object[]{});
+		request.setAttribute("roleList", roleList);
 		return "jsp/role/rolesave";
 	}
 	/**
@@ -107,6 +110,9 @@ public class MainRoleController {
 		List<MainPermission> perList=permissionService.list(new Object[]{});
 		request.setAttribute("perList", perList);
 		request.setAttribute("role", role);
+		
+		List<MainRole> roleList = roleService.list(new Object[]{});
+		request.setAttribute("roleList", roleList);
 		return "jsp/role/rolesave";
 	}
 	/**
@@ -167,6 +173,32 @@ public class MainRoleController {
 			roleService.deleteRole(role);
 			result.setResult(true);
 			result.setResultInfo("删除成功");
+		} catch (Exception e) {
+			// TODO: handle exception
+			// TODO: handle exception
+			e.printStackTrace();
+			result.setResult(false);
+			result.setResultInfo("操作失败");
+		}
+		return result;
+	}
+	/**
+	 * 获取指定角色权限
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("getrole")
+	@ResponseBody
+	public Result<MainRole> getrole(HttpServletRequest request) throws Exception {
+		Result<MainRole> result = new Result<MainRole>();
+		
+		try {
+			String id=request.getParameter("id");
+			MainRole role= roleService.getRole(Integer.parseInt(id));
+			result.setResult(true);
+			result.setResultInfo("查询成功");
+			result.setObject(role);
 		} catch (Exception e) {
 			// TODO: handle exception
 			// TODO: handle exception

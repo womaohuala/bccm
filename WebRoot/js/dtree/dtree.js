@@ -32,7 +32,7 @@ var pos=strFullPath.indexOf(strPath);
 var prePath=strFullPath.substring(0,pos); 
 var postPath=strPath.substring(0,strPath.substr(1).indexOf('/')+1);
 var rootPath=prePath + postPath;
-function Node(id, pid, name,disable,checked, url, title, target, icon, iconOpen, open,newValue,lastValue,nodeid) {
+function Node(id, pid, name,disable,checked,onclick, url, title, target, icon, iconOpen, open,newValue,lastValue,nodeid) {
 	this.id = id;
 
 	this.pid = pid;
@@ -70,6 +70,8 @@ function Node(id, pid, name,disable,checked, url, title, target, icon, iconOpen,
 	this.checked=checked;
 	
 	this.nodeid=nodeid;
+	
+	this.onclick=onclick;
 	
 };
 
@@ -155,9 +157,9 @@ function dTree(objName) {
 
 // Adds a new node to the node array
 
-dTree.prototype.add = function(id, pid, name,disable,checked, url, title, target, icon, iconOpen, open,newValue,lastValue) {
+dTree.prototype.add = function(id, pid, name,disable,checked, onclick,url, title, target, icon, iconOpen, open,newValue,lastValue) {
 
-	this.aNodes[this.aNodes.length] = new Node(id, pid, name,disable,checked, url, title, target, icon, iconOpen, open,newValue,lastValue,this.aNodes.length);
+	this.aNodes[this.aNodes.length] = new Node(id, pid, name,disable,checked,onclick, url, title, target, icon, iconOpen, open,newValue,lastValue,this.aNodes.length);
 
 };
 
@@ -282,16 +284,34 @@ dTree.prototype.node = function(node, nodeId) {
 		//��ӵ�ѡ��ťradio ,�ڵ���ҳ��ѵ�һ��ڵ�id����Ϊ0���ýڵ㲻��ӵ�ѡ��ť
 		// �˴���getRadioSelected��������ʵ���ڵ������ҳ��
 		if(this.config.useRadio ){
-			str +='<input type="radio"  name="'+this.obj+'_id"  id="r'+  this.obj + node.id + '" onclick="getRadioSelected('+node.id+')" ondblclick="getRadioSelected('+node.id+',1)" value="'+node.id+'"/>';
-		    str+= '<input type="hidden"  name="'+this.obj+'_name"  id="c'+  this.obj + nodeId + '"  value="'+node.name+'"/>';
+			str +='<input type="radio"  name="'+this.obj+'_id"  id="r'+  this.obj + node.id + '" ';
+			if(node.onclick!=null&&node.onclick!=""){
+				str+='onclick="'+node.onclick+'"';
+			}else{
+				str+='onclick="getRadioSelected('+node.id+')"';
+			}
+			str+=' value="'+node.id+'"'
+			if(node.checked){
+	    		str+='checked=true';
+	    	}
+	    	if(node.disable){
+	    		str+=' disabled';
+	    	}
+	    	str+='/>';
+		    str+= '<input type="hidden"  name="'+this.obj+'_name"  id="c'+  this.obj + node.id + '"  value="'+node.name+'"/>';
 		    str+= '<input type="hidden"  name="'+this.obj+'_new"   value="'+node.newValue+'"/>';
 		}
 		
 		//��Ӹ�ѡ���ڵ���ҳ��ѵ�һ��ڵ�id����Ϊ0���ýڵ㲻��Ӹ�ѡ�򡣴˴��ķ���selectCheckbox�ڱ�JS�ڲ�ʵ��
 	    if(this.config.useCheckbox == true ){
 	    	str+= '<input type="checkbox"  name="'+
-	    	this.obj+'_id"  id="c'+  this.obj + node.id + 
-	    	'" onclick="javascript:'+this.obj+'.selectCheckbox('+node.id+')" value="'+node.id+'"';
+	    	this.obj+'_id"  id="c'+  this.obj + node.id+'"' ;
+	    	if(node.onclick!=null&&node.onclick!=""){
+				str+='onclick="'+node.onclick+'"';
+			}else{
+				str+='onclick="javascript:'+this.obj+'.selectCheckbox('+node.id+')"';
+			}
+			str+=' value="'+node.id+'"'
 	    	if(node.checked){
 	    		str+='checked=true';
 	    	}
